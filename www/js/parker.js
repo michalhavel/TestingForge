@@ -21,7 +21,8 @@ var viewer2;
 var options = {
     env: 'AutodeskProduction',
     getAccessToken: getForgeToken,
-    documentId: 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6cGFya2VyLXBvYy9Gcm9udCUyMExvYWRlci5pYW0uemlw'
+    documentId: 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE4LTAyLTI4LTA4LTI1LTE0LWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL0QtNjIwLTAwMC1ObyUyMEV4cHJlc3MuZHdmeA'
+    // 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6cGFya2VyLXBvYy9Gcm9udCUyMExvYWRlci5pYW0uemlw'
 
 }
 
