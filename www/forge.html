@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-Compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=no" />
+
+    <title>Forge Viewer Sample</title>
+
+    <!-- Common packages: JQuery & Bootstrap -->
+    <!-- <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" /> -->
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/font-awesome.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- The Viewer CSS -->
+    <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/style.min.css?v=v3.3.*" type="text/css">
+    <!-- <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/style.min.css" type="text/css"> -->
+
+    <!-- Viewer production -->
+    <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/three.min.js?v=v3.3.*"></script>
+    <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/viewer3D.min.js?v=v3.3.*"></script>
+
+    <!-- The Viewer Extensions -->
+    <!--<script src="/extensions/Viewing.Extension.Markup3D.min.js"></script>-->
+    <!--<script src="/extensions/Viewing.Extension.Transform.min.js"></script>-->
+    <!--<script src="/extensions/_Viewing.Extension.ControlSelector.min.js"></script>-->
+
+    <!-- Developer CSS -->
+    <style>
+        body {
+            margin: 0;
+        }
+
+        #MyViewerDiv {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            margin: 0;
+            background-color: #F0F8FF;
+            align-content: center;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        /* #MyNextButton {
+            position: relative;
+            top: 5px;
+            left: 5px;
+            z-index: 1;
+            font-size: 40px;
+            cursor: pointer;
+        } */
+    </style>
+
+    <!-- The Viewer JS
+    <script src="/js/oauth.js"></script>
+    <script src="/js/index.js"></script>
+    <script src="/js/forge.viewer.js"></script> -->
+
+</head>
+
+<body class="stylish-color-dark">
+
+    <!-- Main navigation -->
+    <header>
+            <!--Navbar-->
+            <nav class="navbar navbar-expand-lg navbar-dark bg-blue">
+    
+                <!-- Navbar brand -->
+                <!-- <a class="navbar-brand" href="https://www.cadstudio.cz/">
+                    <img src="img/CS2-loga/CadStudio_horizontal_800t.png" alt="" width="20%">
+                </a> -->
+    
+                <!-- Collapse button -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+    
+                <!-- Collapsible content -->
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    
+                    <!-- Links -->
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+    
+                        <li class="nav-item">
+                            <a class="nav-link" href="viewer360.html">Viewer 360</a>
+                        </li>
+    
+                        <li class="nav-item">
+                            <a class="nav-link" href="configurator360.html">Configurator 360</a>
+                        </li>
+    
+                        <!-- Dropdown forge samples -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Forge - Samples</a>
+                            <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="#">Sample 1</a>
+                                <a class="dropdown-item" href="#">Sample 2</a>
+                                <a class="dropdown-item" href="#">Sample 3</a>
+                            </div>
+                        </li>
+    
+                        <li class="nav-item active">
+                            <a class="nav-link" href="forge.html">Forge - develop
+                                    <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+    
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://shop.cadstudio.cz/">eShop</a>
+                        </li>
+    
+                        <li class="nav-item">
+                            <a class="nav-link" href="http://blog.cadstudio.cz/">Blog</a>
+                        </li>
+    
+                    </ul>
+                    <!-- Links -->
+    
+                    <!-- Search form -->
+                    <form class="form-inline">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Hledat" aria-label="Search">
+                    </form>
+                </div>
+                <!-- Collapsible content -->
+    
+            </nav>
+            <!--/.Navbar-->
+        </header>
+        <!-- Main navigation -->
+
+    <!-- Main layout -->
+    <a class="navbar-brand" href="https://www.cadstudio.cz/">
+        <img src="img/CS2-loga/CadStudio_horizontal_800t.png" alt="" width="15%">
+    </a>
+    <main>
+
+        <br>
+
+        <!-- NavBar-->
+        <!-- <nav class="navbar navbar-inverse navbar-fixed-top" id="my-navbar">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                \
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="https://github.com/jaimerosales/modelderivative-nodejs-tutorial">Model Uploader</a>
+                    </li>
+                    <li>
+                        <a href="https://developer.autodesk.com">Forge Developer Docs</a>
+                    </li>
+                    <li style="margin-top:15px; margin-left:10px">
+                        <a href="https://twitter.com/afrojme" class="twitter-follow-button" data-show-count="false">Follow @afrojme</a>
+                        <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="https://github.com/Autodesk-Forge/viewer-nodejs-tutorial">View on GitHub </a>
+                    </li>
+                </ul>
+            </div>
+        </div> -->
+        <!--End Container-->
+        <!-- </nav> -->
+        <!--End Navbar -->
+
+        <div class="container">
+            <!-- This is where your viewer should attach -->
+            <!-- <div class="center-block" id="viewerDiv"></div> -->
+
+            <div class="container blue">
+                <br>
+                <h1 class="text-center white-text green">Forge prohlížeč</h1>
+                <br>
+
+                <center>
+                    <div class="row" id="MyViewerDiv"></div>
+                    <!-- <div id="MyViewerDiv"></div> -->
+
+                </center>
+
+
+
+
+                <!-- Row -->
+                <div class="text-center">
+                    <!-- <button> -->
+                    <div class="btn bg-blue" id="btn1">
+                        Robotická svařovna
+                    </div>
+
+                    <div class="btn bg-blue" id="btn2">
+                        Hřídel
+                    </div>
+
+                    <div class="btn bg-blue" id="btn3">
+                        Židle - zkusit btn NEXT
+                    </div>
+
+                    <!-- <button onclick="myFunction()" id="btnModel11">Click me</button> -->
+                    <!-- </button> -->
+                    <div class="btn bg-blue" id="MyNextButton" onclick="loadNextModel()">Next!</div>
+
+                </div>
+                <br>
+                <!-- Row -->
+            </div>
+
+            <!-- Model container -->
+            <br>
+            <br>
+            <!-- Extension Buttons -->
+            <!--<div class="row">-->
+            <!---->
+            <!--<div class="myButton" id="background" onclick="changeBackground()">Change Background</div> -->
+            <!--<div class="myButton" id="background" onclick="resetBackground()">Reset Background</div> -->
+            <!--<div class="myButton" id="background" onclick="loadMarkup3D()">Markup3D</div>-->
+            <!--<div class="myButton" id="background" onclick="loadTransform()">Transform</div>-->
+            <!--<div class="myButton" id="background" onclick="loadControlSelector()">Control Selector</div>-->
+            <!--</div>-->
+            <!---->
+        </div>
+        <!-- /container -->
+
+        <!-- Footer -->
+        <footer class="page-footer bg-blue center-on-small-only pt-0">
+
+            <!--Footer Links-->
+            <div class="container">
+
+                <!--First row-->
+                <div class="row">
+
+                    <!--First column-->
+                    <div class="col-md-12">
+
+                        <div class="footer-socials mb-5 flex-center">
+
+                            <!--Facebook-->
+                            <a class="icons-sm fb-ic">
+                                <i class="fa fa-facebook fa-lg white-text mr-md-4"> </i>
+                            </a>
+                            <!--Twitter-->
+                            <a class="icons-sm tw-ic">
+                                <i class="fa fa-twitter fa-lg white-text mr-md-4"> </i>
+                            </a>
+                            <!--Google +-->
+                            <a class="icons-sm gplus-ic">
+                                <i class="fa fa-google-plus fa-lg white-text mr-md-4"> </i>
+                            </a>
+                            <!--Linkedin-->
+                            <a class="icons-sm li-ic">
+                                <i class="fa fa-linkedin fa-lg white-text mr-md-4"> </i>
+                            </a>
+                            <!--Instagram-->
+                            <a class="icons-sm ins-ic">
+                                <i class="fa fa-instagram fa-lg white-text mr-md-4"> </i>
+                            </a>
+                            <!--Pinterest-->
+                            <a class="icons-sm pin-ic">
+                                <i class="fa fa-pinterest fa-lg white-text"> </i>
+                            </a>
+                        </div>
+                    </div>
+                    <!--/First column-->
+                </div>
+                <!--/First row-->
+            </div>
+            <!--/Footer Links-->
+
+            <!--Copyright-->
+            <div class="footer-copyright">
+                <div class="container-fluid">
+                    © 2018 Copyright:
+                    <a href="https://www.cadstudio.cz"> CADStudio.cz </a>
+                </div>
+            </div>
+            <!--/Copyright-->
+
+
+        </footer>
+        <!-- Footer -->
+
+        <!-- SCRIPTS -->
+        <!-- JQuery -->
+        <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+        <!-- Bootstrap tooltips -->
+        <script type="text/javascript" src="js/popper.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <!-- MDB core JavaScript -->
+        <script type="text/javascript" src="js/mdb.min.js"></script>
+        <!-- The Viewer JS -->
+        <!-- <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/three.min.js"></script>
+    <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/viewer3D.min.js"></script> -->
+        <!-- Developer JS Forge Viewer -->
+        <script type="text/javascript" src="js/oauth.js"></script>
+        <script type="text/javascript" src="js/forge.viewer.js"></script>
+
+</body>
+
+</html>
