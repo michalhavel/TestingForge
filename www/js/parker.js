@@ -82,7 +82,7 @@ function onDocumentLoadSuccess(doc) {
     window.addEventListener("onPointClick", function(e){
 
         if (e.detail === 1){
-            document.getElementById("myIframe").src = './parker-html/Engine/PowerShift%20(Hydraulic)%2010-Bolt%20Power%20Take-Off%20(PTO)%20-%20280%20Series%20_%20Parker%20NA.htm'
+            document.getElementById("myIframe").src = './parker-html/Engine/PowerShift%20(Hydraulic)%2010-Bolt%20Power%20Take-Off%20(PTO)%20-%20280%20Series%20_%20Parker%20NA.htm';
             viewer.isolate(682)
             viewer.fitToView();
             loadViewer2("urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6cGFya2VyLXBvYy9lbmdpbmUub2JqLnppcA")
