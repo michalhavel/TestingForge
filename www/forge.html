@@ -206,10 +206,14 @@
                         <div id="ui">
                             <ul>
                                 <!-- <li id="label1"> -->
-                                        <div class="btn bg-blue" id="btnTest">
-                                                Test
-                                            </div>
-                                    <!-- <a class="col-md-2 red text-center text-white" href="#test" title="Test">Test</a> -->
+                                <div class="btn bg-blue" id="btnTest">
+                                    Component name
+                                </div>
+                                <br>
+                                <br>
+                                <br>
+                                <h3 id="property"></h3>
+                                <!-- <a class="col-md-2 red text-center text-white" href="#test" title="Test">Test</a> -->
                                 <!-- </li> -->
                             </ul>
 
@@ -312,15 +316,74 @@
         <!-- Developer JS Forge Viewer -->
         <script type="text/javascript" src="js/oauth.js"></script>
         <script type="text/javascript" src="js/forge.viewer.js"></script>
+        <script type="text/javascript" src="extensions/Autodesk.ADN.Viewing.Extension.ControlSelector.js"></script>
 
         <script>
             var viewer = this.viewer;
-             var btnClickTest = document.getElementById("btnTest")
-             btnClickTest.addEventListener('click', function(){
-                 viewer.setNavigationLock(true);
+            var btnClickTest = document.getElementById("btnTest")
+            btnClickTest.addEventListener('click', function () {
+                getModelProperties();
+            var propertyText = document.getElementById('property')
+            propertyText.innerText = getModelProperties().property;
+
                 // document.getElementById('MyViewerDiv')
-                
-             });
+
+            });
+
+            function getModelProperties() {
+                return new Promise((resolve, reject) => {
+                    const dbId = viewer.getSelection()[0];
+
+                    if (viewer.getSelectionCount() !== 1) {
+                        return reject('Invalid selection count');
+                    }
+
+                    return new Promise((resolve) => {
+                        viewer.model.getProperties(dbId, (item) => {
+                            const items = item.properties.filter((property) => !property.hidden);
+                            resolve(items);
+                        });
+                    })
+                        .then((list) => {
+                            list = list.map(item => ({
+                                ...item,
+                                displayCategory: item.displayCategory || 'Miscellaneous'
+                            }));
+                            // Unique list of categories
+                            const categories = uniq(list.map(item => item.displayCategory));
+
+                            // Model data to be consumed
+                            // Ex: [ {category: 'Miscellaneous', data: []} ]
+                            const properties = categories.map(category => (
+                                {
+                                    category,
+                                    data: list.filter(item => item.displayCategory === category)
+                                }
+                            ));
+
+                            resolve(properties);
+                        });
+                });
+            }
+
+
+            // var currSelection = this.viewer.getSelection();
+            // var domElem = document.getElementById('MySelectionValue');
+            // domElem.innerText = currSelection.length;
+            // var _selectedId;
+
+
+            // viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT,function(event){
+            //     var dbId = event.dbIdArray[0];
+            //     if (typeof dbId !== 'undefined'){
+            //         _selectedId = dbId;
+            //     }
+            //     else{
+            //         _selectedId = null;
+            //     }
+            // });
+
+
         </script>
 
 </body>
