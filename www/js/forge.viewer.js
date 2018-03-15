@@ -1,22 +1,11 @@
-import { getModelProperties } from "./components/Viewer/Viewer-helpers";
-
-// import {properties, getModelProperties} from "./components/Viewer/Viewer-helpers"
-// import { getViewerProperties } from "./actions/viewerActions";
+// import { getModelProperties } from "./components/Viewer/Viewer-helpers";
+// const getModelProperties = require('./components/Viewer/Viewer-helpers');
+import {getModelProperties} from "./components/Viewer/Viewer-helpers";
 
 var viewer;
 var lmvDoc;
 var viewables;
 var indexViewable;
-// var options = {
-//     env: 'AutodeskProduction',
-//     getAccessToken: function (onGetAccessToken) {
-//         var accessToken = 'eyJhbGciOiJIUzI1NiIsImtpZCI6Imp3dF9zeW1tZXRyaWNfa2V5In0.eyJjbGllbnRfaWQiOiI5OEdCaHZvQnowTVM5cmhlUmQxcU15Zk1HakJDZm1QNiIsImV4cCI6MTUxOTg5NTk0MCwic2NvcGUiOlsiZGF0YTpyZWFkIiwiZGF0YTp3cml0ZSIsImRhdGE6Y3JlYXRlIiwiYnVja2V0OmNyZWF0ZSIsImJ1Y2tldDpyZWFkIl0sImF1ZCI6Imh0dHBzOi8vYXV0b2Rlc2suY29tL2F1ZC9qd3RleHA2MCIsImp0aSI6IlYzemJYelcwN1VCeXNaVTRHMjJOcGlGWEZPU0diU2tiS01hZ1I2a1ExNzdlSWdRSFNJd3pDcHBRY2JhT0E0TWQifQ.OLc4fTjHS4RIiQm-xRweJDcsK-9oje0whXgP_caVdEI';
-//         var expireTimeSeconds = 86400000000000000000;
-//         onGetAccessToken(accessToken, expireTimeSeconds);
-
-
-//     }
-// };
 
 var options = {
     env: 'AutodeskProduction',
