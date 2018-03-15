@@ -1,27 +1,29 @@
 {
-  "name": "viewer-server",
-  "version": "0.0.1",
-  "private": true,
+  "name": "viewer-nodejs-tutorial",
+  "version": "1.0.0",
+  "description": "Getting Started with Viewer and NodeJS",
+  "main": "server.js",
   "scripts": {
-    "start": "npm run start:server",
-    "watch": "npm-run-all --parallel start:*",
-    "start:server": "node server/server.js",
-    "start:client": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "postinstall": "npm run build"
+    "start": "NODE_ENV=production node start.js",
+    "dev": "node start.js",
+    "nodemon": "nodemon start.js --ignore www/"
   },
-  "author": "Jaime Rosales",
-  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Autodesk-Forge/viewer-react-express-headless.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Autodesk-Forge/viewer-react-express-headless/issues"
+    "url": "git+https://github.com/Autodesk-Forge/viewer-nodejs-tutorial.git"
   },
   "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "express": "^4.13.4",
+    "bootstrap": "*",
+    "express-session": "^1.13.0",
+    "font-awesome": "^4.7.0",
+    "forge-apis": "^0.4.1",
+    "jquery": "*",
+    "moment": "*",
+    "oauth": "^0.9.14",
+    "request": "^2.72.0",
+    "serve-favicon": "^2.3.0",
     "axios": "^0.15.3",
     "babel-cli": "^6.6.5",
     "babel-core": "^6.4.5",
@@ -38,17 +40,13 @@
     "react-redux": "^5.0.7",
     "react-scripts": "^0.7.0"
   },
+  "author": "Jaime Rosales",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Autodesk-Forge/viewer-nodejs-tutorial/issues"
+  },
+  "homepage": "https://github.com/Autodesk-Forge/viewer-nodejs-tutorial#readme",
   "devDependencies": {
     "loadash": "^1.0.0"
-  },
-  "babel": {
-    "presets": [
-      "es2015",
-      "stage-0"
-    ]
-  },
-  "engines": {
-    "node": "6.7.x",
-    "npm": "3.10.x"
   }
 }
