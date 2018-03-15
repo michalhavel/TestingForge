@@ -1,3 +1,5 @@
+import {properties, getModelProperties} from "./components/Viewer/Viewer-helpers"
+import { getViewerProperties } from "./actions/viewerActions";
 
 var viewer;
 var lmvDoc;
@@ -126,6 +128,13 @@ function onLoadModelSuccess(model) {
     console.log(model);
 }
 
+var btnClickTest = document.getElementById('btnTest')
+btnClickTest.addEventListener('click', function () {
+
+    var propertyText = document.getElementById('property')
+    propertyText.innerText = getModelProperties(model);
+
+});
 /**
  * viewer.loadModel() failure callback.
  * Invoked when there's an error fetching the SVF file.

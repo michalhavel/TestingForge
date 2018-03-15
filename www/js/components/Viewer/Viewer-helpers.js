@@ -106,7 +106,7 @@ function onGeometryLoaded(event) {
     }
 
 
-function getModelProperties() {
+export function getModelProperties() {
   return new Promise((resolve, reject) => {
     const dbId = viewer.getSelection()[0];
 
