@@ -1,6 +1,6 @@
-/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Autodesk, Inc. All rights reserved
-// Written by Forge Partner Development
+// Written by Jaime Rosales 2016 - Forge Developer Partner Services
 //
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted,
@@ -14,41 +14,40 @@
 // MERCHANTABILITY OR FITNESS FOR A PARTICULAR USE.  AUTODESK, INC.
 // DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
 // UNINTERRUPTED OR ERROR FREE.
-/////////////////////////////////////////////////////////////////////
-'use strict';
+/////////////////////////////////////////////////////////////////////////////////
 
-var express = require('express');
-var cookieParser = require('cookie-parser');
-var session = require('express-session');
-var app = express();
+const path = require('path');
+const express = require('express');
+const app = express();
+const request = require('request');
+const buildDirectory = path.join(__dirname, '../build')
+const credentials = (
+  require ('fs').existsSync(path.join(__dirname, 'credentials.js'))
+    ? require ('./credentials')
+    : (
+        console.log('No credentials.js file present, assuming using FORGE_CLIENT_ID & FORGE_CLIENT_SECRET system variables.'),
+        require ('./credentials_')
+      )
+);
 
-// this session will be used to save the oAuth token
-app.use(cookieParser());
-app.set('trust proxy', 1) // trust first proxy - HTTPS on Heroku 
-app.use(session({
-    secret: 'autodeskforge',
-    cookie: {
-        httpOnly: true,
-        secure: (process.env.NODE_ENV === 'production'),
-        maxAge: 1000 * 60 * 60 // 1 hours to expire the session and avoid memory leak
-    },
-    resave: false,
-    saveUninitialized: true
-}));
+app.set('port', (process.env.PORT || 3001));
+app.use(express.static(buildDirectory))
 
-// prepare server routing
-app.use('/', express.static(__dirname + '/../www/')); // redirect static calls
-app.use('/js', express.static(__dirname + '/../node_modules/bootstrap/dist/js')); // redirect static calls
-app.use('/js', express.static(__dirname + '/../node_modules/moment/min')); // redirect static calls
-app.use('/js', express.static(__dirname + '/../node_modules/jquery/dist')); // redirect static calls
-app.use('/css', express.static(__dirname + '/../node_modules/bootstrap/dist/css')); // redirect static calls
-app.use('/css', express.static(__dirname + '/../node_modules/font-awesome/css')) // redirect static calls
-app.use('/fonts', express.static(__dirname + '/../node_modules/font-awesome/fonts')) // redirect static calls
-app.use('/fonts', express.static(__dirname + '/../node_modules/bootstrap/dist/fonts')); // redirect static calls
-app.set('port', process.env.PORT || 3000); // main port
+app.get('/', function (req, res) {
+  res.sendFile(`${buildDirectory}/index.html`)
+})
+app.get ('/token', function (req, res) {
+  request.post(
+    credentials.Authentication,
+    { form: credentials.credentials },
+    function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        res.json(JSON.parse(body)) ;
+      }
+    });
+});
 
-// prepare our API endpoint routing
-var oauth = require('./oauth');
-app.use('/', oauth); // redirect oauth API calls
-
-module.exports = app;
+app.listen(app.get('port'), () => {
+  // eslint-disable-line no-console
+  console.log(`Find the server at: http://localhost:${app.get('port')}/`);
+});

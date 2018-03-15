@@ -1,5 +1,7 @@
-import {properties, getModelProperties} from "./components/Viewer/Viewer-helpers"
-import { getViewerProperties } from "./actions/viewerActions";
+import { getModelProperties } from "./components/Viewer/Viewer-helpers";
+
+// import {properties, getModelProperties} from "./components/Viewer/Viewer-helpers"
+// import { getViewerProperties } from "./actions/viewerActions";
 
 var viewer;
 var lmvDoc;
@@ -132,7 +134,7 @@ var btnClickTest = document.getElementById('btnTest')
 btnClickTest.addEventListener('click', function () {
 
     var propertyText = document.getElementById('property')
-    propertyText.innerText = getModelProperties(model);
+    propertyText.innerText = getModelProperties()
 
 });
 /**
