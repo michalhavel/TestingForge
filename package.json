@@ -14,7 +14,6 @@
   },
   "author": "Jaime Rosales",
   "license": "MIT",
-  "proxy": "http://localhost:3001/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Autodesk-Forge/viewer-react-express-headless.git"
