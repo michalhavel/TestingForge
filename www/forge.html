@@ -12,10 +12,10 @@
     <!-- Common packages: JQuery & Bootstrap -->
     <link rel="shortcut icon" href="images/faviconCS.ico" type="image/x-icon" />
 
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/font-awesome.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="css/bootstrap-theme.min.css"> -->
+    <link rel="stylesheet" href="css/main.css">
+    <!-- <link rel="stylesheet" href="css/font-awesome.css"> -->
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -26,8 +26,8 @@
     <!-- Your custom styles (optional) -->
     <link href="css/style.css" rel="stylesheet">
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/moment.min.js"></script>
+    <!-- <script src="js/jquery.min.js"></script> -->
+    <!-- <script src="js/moment.min.js"></script> -->
     <script src="js/bootstrap.min.js"></script>
 
     <!-- The Viewer CSS -->
@@ -316,55 +316,71 @@
         <!-- Developer JS Forge Viewer -->
         <script type="text/javascript" src="js/oauth.js"></script>
         <script type="text/javascript" src="js/forge.viewer.js"></script>
-        <script type="text/javascript" src="extensions/Autodesk.ADN.Viewing.Extension.ControlSelector.js"></script>
-
+        <!-- <script type="text/javascript" src="extensions/Autodesk.ADN.Viewing.Extension.ControlSelector.js"></script> -->
+        <script src="js/components/Viewer/Viewer-helpers.js" type="module"></script>
         <script>
-            var viewer = this.viewer;
-            var btnClickTest = document.getElementById("btnTest")
+           
+            // import { viewer } from '../js/components/Viewer';
+
+            // var viewer = this.viewer;
+            var btnClickTest = document.getElementById('btnTest')
             btnClickTest.addEventListener('click', function () {
-                getModelProperties();
-            var propertyText = document.getElementById('property')
-            propertyText.innerText = getModelProperties().property;
+        
+                var propertyText = document.getElementById('property')
+                propertyText.innerText = "neco";
 
                 // document.getElementById('MyViewerDiv')
 
             });
 
-            function getModelProperties() {
-                return new Promise((resolve, reject) => {
-                    const dbId = viewer.getSelection()[0];
+            // function onGeometryLoaded(event) {
+            //     var viewer = event.target;
+            //     viewer.removeEventListener(
+            //         Autodesk.Viewing.GEOMETRY_LOADED_EVENT,
+            //         onGeometryLoaded);
+            //     viewer.fitToView();
+            //     viewer.setQualityLevel(false, false); // Getting rid of Ambientshadows to false to avoid blackscreen problem in Viewer.
+            // }
 
-                    if (viewer.getSelectionCount() !== 1) {
-                        return reject('Invalid selection count');
-                    }
+            // function getModelProperties() {
+            //     return new Promise((resolve, reject) => {
+            //         const dbId = viewer.getSelection()[0];
 
-                    return new Promise((resolve) => {
-                        viewer.model.getProperties(dbId, (item) => {
-                            const items = item.properties.filter((property) => !property.hidden);
-                            resolve(items);
-                        });
-                    })
-                        .then((list) => {
-                            list = list.map(item => ({
-                                ...item,
-                                displayCategory: item.displayCategory || 'Miscellaneous'
-                            }));
-                            // Unique list of categories
-                            const categories = uniq(list.map(item => item.displayCategory));
+            //         if (viewer.getSelectionCount() !== 1) {
+            //             return reject('Invalid selection count');
+            //         }
 
-                            // Model data to be consumed
-                            // Ex: [ {category: 'Miscellaneous', data: []} ]
-                            const properties = categories.map(category => (
-                                {
-                                    category,
-                                    data: list.filter(item => item.displayCategory === category)
-                                }
-                            ));
+            //         return new Promise((resolve) => {
+            //             viewer.model.getProperties(dbId, (item) => {
+            //                 const items = item.properties.filter((property) => !property.hidden);
+            //                 resolve(items);
+            //             });
+            //         })
+            //             .then((list) => {
 
-                            resolve(properties);
-                        });
-                });
-            }
+            //                 // Normalize displayCategory property in case it's falsy
+            //                 list = list.map(item => ({
+            //                     ...item,
+            //                     displayCategory: item.displayCategory || 'Miscellaneous'
+            //                 }));
+
+            //                 // Unique list of categories
+            //                 const categories = uniq(list.map(item => item.displayCategory));
+
+            //                 // Model data to be consumed
+            //                 // Ex: [ {category: 'Miscellaneous', data: []} ]
+            //                 const properties = categories.map(category => (
+            //                     {
+            //                         category,
+            //                         data: list.filter(item => item.displayCategory === category)
+            //                     }
+            //                 ));
+
+            //                 resolve(properties);
+            //             });
+            //     });
+            // }
+
 
 
             // var currSelection = this.viewer.getSelection();
