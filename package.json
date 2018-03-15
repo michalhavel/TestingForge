@@ -48,5 +48,15 @@
   "homepage": "https://github.com/Autodesk-Forge/viewer-nodejs-tutorial#readme",
   "devDependencies": {
     "loadash": "^1.0.0"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-0"
+    ]
+  },
+  "engines": {
+    "node": "6.7.x",
+    "npm": "3.10.x"
   }
 }
