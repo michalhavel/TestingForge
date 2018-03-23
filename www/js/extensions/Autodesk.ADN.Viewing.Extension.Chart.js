@@ -251,7 +251,7 @@ Autodesk.ADN.Viewing.Extension.Chart = function (viewer, options) {
   // Gets all existing properties from components list
   //
   ///////////////////////////////////////////////////////////////////////////
-  function getAvailableProperties(components, onResult) {
+  module.exports = { getProp: function getAvailableProperties(components, onResult) {
 
     var propertiesMap = {};
 
@@ -275,7 +275,7 @@ Autodesk.ADN.Viewing.Extension.Chart = function (viewer, options) {
 
         onResult(Object.keys(propertiesMap));
       });
-  }
+  }}
 
   ///////////////////////////////////////////////////////////////////////////
   // Get all leaf components

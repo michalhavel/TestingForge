@@ -185,9 +185,10 @@ btnClickTest.addEventListener('click', function () {
     var activeUrn = viewer.model.getData().urn;
     var mass = viewer.model.getBulkProperties(selectionIdDb,['Materiál']);
     var material = '';
-    var nodeAll = GuiViewer3D.dbId;
+    // var nodeAll = GuiViewer3D.dbId;
+    var neco = selectionIdDb.getBulkProperties;
 
-    propertyText.innerText = material;
+    propertyText.innerText = neco;
 
     // propertyText.innerText = hasPropertyTask(viewer.model,viewer.getSelection().dbId,'Materiál',matches).displayValue
 
@@ -406,10 +407,11 @@ function loadControlSelector() {
     viewer.loadExtension('_Viewing.Extension.ControlSelector');
 }
 
-function loadProperty() {
-    viewer.loadExtension('Autodesk.ADN.Viewing.Extension.Chart')
-    
-}
+var viewingProp = require('../js/extensions/Autodesk.ADN.Viewing.Extension.Chart');
+
+console.log(typeof viewingProp.getProp(viewer.getSelection()));
+
+
 // function getProperties(){
 //     viewer.loadExtension('Viewing.Extension.MetaProperty')
 // }
