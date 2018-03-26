@@ -207,7 +207,14 @@
                                 <br>
                                 <br>
                                 <br>
-                                <h3 id="property"></h3>
+                                <h3>SelectionIdDb</h3>
+                                <p id="IdDb"></p>
+                                <br>
+                                <h3>SelectionNodeName</h3>
+                                <p id="nodeName"></p>
+                                <br>
+                                <h3>PartNumber</h3>
+                                <p id="propertyValue1"></p>
                                 <!-- <a class="col-md-2 red text-center text-white" href="#test" title="Test">Test</a> -->
                                 <!-- </li> -->
                             </ul>
@@ -305,8 +312,15 @@
         <!-- Viewer production -->
         <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/three.min.js?v=v3.3"></script>
         <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/viewer3D.min.js?v=v3.3"></script>
-        <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/wgs.min.js?v=v3.3"></script>
-        <script src="js/extensions/Autodesk.ADN.Viewing.Extension.Chart.js"></script>
+        <!-- <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/wgs.min.js?v=v3.3"></script> -->
+        <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/webvr-polyfill.min.js?v=3.3"></script>
+        <link rel="stylesheet" type="text/css" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/extensions/WebVR/WebVR.css?v=3.3">
+        <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/extensions/Markups/MarkupsGui.js?v=3.3"></script>
+        <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/extensions/WebVR/WebVR.js?v=3.3"></script>
+        <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/wgs.js?v=3.3"></script>
+
+        <!-- <script src="GET https://developer.api.autodesk.com/modelderivative/v2/designdata/:urn/metadata/:guid/properties"></script> -->
+        <!-- <script src="js/extensions/Autodesk.ADN.Viewing.Extension.Chart.js"></script> -->
     
         <!-- SCRIPTS -->
     
@@ -324,12 +338,15 @@
         <!-- Developer JS Forge Viewer -->
         <script type="text/javascript" src="js/oauth.js"></script>
         <script type="text/javascript" src="js/forge.viewer.js"></script>
+        <!-- <script language="JavaScript" src="js/scripts.js"></script> -->
+        <!-- <script src="js/jstree.js"></script> -->
+        <!-- <script type ="text/javascript" src="js/reportData.js"></script> -->
         <!-- <script src="extensions/Viewing.Extension.MetaProperty/Viewing.Extension.MetaProperty.js"></script> -->
         <!-- <script src="extensions/Autodesk.ADN.Viewing.Extension.js"></script> -->
     
-        <script src="js/libraries/d3.min.js"></script>
+        <!-- <script src="js/libraries/d3.min.js"></script>
         <script src="js/libraries/d3pie.min.js"></script>
-        <script src="js/libraries/nv.d3.min.js"></script>
+        <script src="js/libraries/nv.d3.min.js"></script> -->
     
         <!-- BIM360 packages: login and authentication -->
         <!-- <script src="js/oauth.js"></script> -->

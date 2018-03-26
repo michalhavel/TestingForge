@@ -3,12 +3,14 @@ var viewer;
 var lmvDoc;
 var viewables;
 var indexViewable;
+var propValue;
 
 var options = {
     env: 'AutodeskProduction',
     getAccessToken: getForgeToken
 }
 
+// GET https://developer.api.autodesk.com/modelderivative/v2/designdata/:urn/metadata/:guid/properties
 
 var documentId;
 
@@ -131,68 +133,90 @@ function onLoadModelError(viewerErrorCode) {
 
 
 
-///////////////////////////////////////////////////////////////////////////
-// Gets all existing properties from components list
-//
-///////////////////////////////////////////////////////////////////////////
-// function getAvailableProperties(components, onResult) {
-//     var propertiesMap = {};
-//     async.each(components,
-//         function (component, callback) {
-//             viewer.getProperties(component.dbId, function (result) {
-//                 for (var i = 0; i < result.properties.length; i++) {
-//                     var prop = result.properties[i];
-//                     propertiesMap[prop.displayName] = {};
-//                 }
-//                 callback();
-//             });
-//         },
-//         function (err) {
-//             onResult(Object.keys(propertiesMap));
+// function showAllProperties(viewer) {
+//     var instanceTree = viewer.model.getData().instanceTree;
+
+//     var allDbIds = Object.keys(instanceTree.nodeAccess.dbIdToIndex);
+
+//     for (var key in allDbIds) {
+//         var id = allDbIds[key];
+//         viewer.model.getProperties(id, function (data) {
+//             var str = "";
 //         });
+//     }
+//     return str;
+// }
+
+// function getFullPath(tree, dbId) {
+//     var path = [];
+//     while (dbId) {
+//         var name = tree.getNodeName(dbId);
+//         path.unshift(name);
+//         dbId = tree.getNodeParentId(dbId);
+//     }
+
+//     // We do not care about the top 2 items because it's just the file name
+//     // and root component name
+//     path = path.splice(2, path.length - 1)
+
+//     return path.join('+');
+// }
+
+// Autodesk.Viewing.Model.prototype.getProperties = function (dbId, onSuccessCallback, onErrorCallback) {
+//     if (!this.myData || !this.myLoader)
+//         return;
+
+//     this.myLoader.getProperties(dbId, onSuccessCallback, onErrorCallback);
 // };
-
-//  var matches = [];
-
-//   // Creates a thunk for our task
-//   // We look for all components which have a
-//   // property named 'Material' and returns a list
-//   // of matches containing dbId and the prop value
-//   var taskThunk = function(model, dbId) {
-
-//     return hasPropertyTask(
-//      model, dbId, 'Materiál', matches);
-//  }
-
-//  var taskResults = executeTaskOnModelTree(
-//    viewer.model, taskThunk);
-
-//  Promise.all(taskResults).then(function(){
-
-//    console.log('Found ' + matches.length + ' matches');
-//    console.log(matches);
-// });
 
 var btnClickTest = document.getElementById('btnTest');
 btnClickTest.addEventListener('click', function () {
 
-    var propertyText = document.getElementById('property');
+    var selectionIdDbText = document.getElementById('IdDb');
+    var nodeNameText = document.getElementById('nodeName');
+    // Property - Číslo součásti
+    var propertyValue1Text = document.getElementById('propertyValue1');
+    var propertyName = "Číslo součásti";
+    
+
     var selectionIdDb = viewer.getSelection();
     var selectionModelName = selectionIdDb.displayName;
     var selectionCount = viewer.getSelectionCount();
-    var modelName = '';
-    // var propertiesArray = getProperties(selectionIdDb);
     var activeUrn = viewer.model.getData().urn;
-    var mass = viewer.model.getBulkProperties(selectionIdDb,['Materiál']);
-    var material = '';
-    // var nodeAll = GuiViewer3D.dbId;
-    var neco = selectionIdDb.getBulkProperties;
+    var nodeName = viewer.modelstructure.instanceTree.getNodeName(selectionIdDb);
+    
+    var getProperty1 = getProperties(selectionIdDb,propertyName);
 
-    propertyText.innerText = neco;
-
-    // propertyText.innerText = hasPropertyTask(viewer.model,viewer.getSelection().dbId,'Materiál',matches).displayValue
-
+    selectionIdDbText.innerText = selectionIdDb;
+    nodeNameText.innerText = nodeName;
+ 
+    // console.log(propertyValue1Text);
+    propertyValue1Text.innerText = getProperty1;
+    
 });
+
+// Get Properties from selected child
+function getProperties(dbId, propName) {
+     
+    viewer.model.getBulkProperties(dbId, propName, function (objProperties) {
+        
+        if (dbId.length === 1) {
+            objProperties[0].properties.forEach(i => {
+                if (i.displayName === propName) {
+                    
+                    propValue = i.displayValue;
+
+                    return propValue;
+                };
+            });
+        }
+        else 
+        {
+            console.log("Je vybráno více jak jedna součást")
+        }
+    });
+    return propValue;
+};
 
 var btnClickBackgroud1 = document.getElementById('btnBackgrd1');
 btnClickBackgroud1.addEventListener('click', function () {
@@ -203,154 +227,6 @@ var btnClickBackgroundReset = document.getElementById('btnBackgrdReset');
 btnClickBackgroundReset.addEventListener('click', function () {
     resetBackground();
 });
-
-//GetProperties
-
-// var guidToNodeIdMapping = null;
-
-// function createGuidToNodeMapping(modelRoot) {
-//     var nodesToProcess = [];
-//     var currentMapping = {};
-
-//     // Get all the nodes rooted at this model root.
-//     //
-//     function getAllNodes(root) {
-//         if (root.children) {
-//             for (var k = 0; k < root.children.length; k++) {
-//                 var child = root.children[k];
-//                 nodesToProcess.push(child);
-//                 getAllNodes(child);
-//             }
-//         }
-//     }
-
-//     getAllNodes(modelRoot);
-
-//     function processNode(node, onNodeProcessed) {
-//         // Gets the property value for the given property name, if it exists.
-//         //
-//         function getPropertyValue(properties, propertyName) {
-//             for (var i = 0; i < properties.length; ++i) {
-//                 var property = properties[i];
-//                 if (property.displayName === propertyName) {
-//                     return property.displayValue;
-//                 }
-//             }
-//             return null;
-//         }
-
-//         // When the properties are retrieved, map the node's guid to its id,
-//         // if the guid exists.
-//         //
-//         function onPropertiesRetrieved(result) {
-//             var guid = getPropertyValue(result.properties, 'Guid');
-//             if (guid) {
-//                 currentMapping[guid] = node.dbId;
-//             }
-
-//             onNodeProcessed();
-//         }
-
-//         // On error, move on to the next node.
-//         //
-//         function onError(status, message, data) {
-//             onNodeProcessed();
-//         }
-
-//         viewer.getProperties(node.dbId, onPropertiesRetrieved, onError);
-//     }
-
-//     // Process the nodes one by one.
-//     //
-//     function processNext() {
-//         if (nodesToProcess.length > 0) {
-//             processNode(nodesToProcess.shift(), processNext);
-//         } else {
-//             // No more nodes to process - the mappings are complete.
-//             //
-//             guidToNodeIdMapping = currentMapping;
-//         }
-//     }
-
-//     processNext();
-// }
-
-// viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, function (e) {
-//     if (viewer.model) {
-//         viewer.model.getObjectTree(function (root) {
-//             createGuidToNodeMapping(root);
-//         });
-//     }
-// });
-
-// viewer.getNodeIdByGuid = function (guid) {
-//     if (guidToNodeIdMapping && guid in guidToNodeIdMapping) {
-//         return guidToNodeIdMapping[guid];
-//     }
-//     return null;
-// };
-
-//  function hasPropertyTask(model, dbId, propName, matches) {
-
-//        return new Promise(function(resolve, reject){
-
-//          model.getProperties(dbId, function(result) {
-
-//           if(result.properties) {
-
-//             for (var i = 0; i < result.properties.length; ++i) {
-
-//               var prop = result.properties[i];
-
-//               //check if we have a match
-//               if (prop.displayName == propName) {
-
-//                 var match = {
-//                   dbId: dbId
-//                 }
-
-//                 match[propName] = prop.displayValue;
-
-//                 matches.push(match);
-//               }
-//             }
-//           }
-
-//           return resolve();
-
-//         }, function() {
-
-//           return reject();
-//         });
-//       });
-//     }
-
-//     var matches = [];
-
-//   // Creates a thunk for our task
-//   // We look for all components which have a
-//   // property named 'Material' and returns a list
-//   // of matches containing dbId and the prop value
-//   var taskThunk = function(model, dbId) {
-
-//     return hasPropertyTask(
-//      model, dbId, 'Material', matches);
-//  }
-
-//  var taskResults = executeTaskOnModelTree(
-//    viewer.model, taskThunk);
-
-//  Promise.all(taskResults).then(function(){
-
-//    console.log('Found ' + matches.length + ' matches');
-//    console.log(matches);
-//  });
-
-
-// var btnClickResetBackgroud
-
-
-
 
 /////////////////////////////////////////////////////////////////////////////////
 //
@@ -406,11 +282,6 @@ function loadTransform() {
 function loadControlSelector() {
     viewer.loadExtension('_Viewing.Extension.ControlSelector');
 }
-
-var viewingProp = require('../js/extensions/Autodesk.ADN.Viewing.Extension.Chart');
-
-console.log(typeof viewingProp.getProp(viewer.getSelection()));
-
 
 // function getProperties(){
 //     viewer.loadExtension('Viewing.Extension.MetaProperty')
