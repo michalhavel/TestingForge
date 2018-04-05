@@ -63,6 +63,7 @@ function onDocumentLoadSuccess(doc) {
     viewables = Autodesk.Viewing.Document.getSubItemsWithProperties(doc.getRootItem(), {
         'type': 'geometry',
         'role': '3d'
+
     }, true);
     if (viewables.length === 0) {
         console.error('Document contains no viewables.');
@@ -131,102 +132,88 @@ function onLoadModelError(viewerErrorCode) {
     console.error('onLoadModelError() - errorCode:' + viewerErrorCode);
 }
 
-
-
-// function showAllProperties(viewer) {
-//     var instanceTree = viewer.model.getData().instanceTree;
-
-//     var allDbIds = Object.keys(instanceTree.nodeAccess.dbIdToIndex);
-
-//     for (var key in allDbIds) {
-//         var id = allDbIds[key];
-//         viewer.model.getProperties(id, function (data) {
-//             var str = "";
-//         });
-//     }
-//     return str;
-// }
-
-// function getFullPath(tree, dbId) {
-//     var path = [];
-//     while (dbId) {
-//         var name = tree.getNodeName(dbId);
-//         path.unshift(name);
-//         dbId = tree.getNodeParentId(dbId);
-//     }
-
-//     // We do not care about the top 2 items because it's just the file name
-//     // and root component name
-//     path = path.splice(2, path.length - 1)
-
-//     return path.join('+');
-// }
-
-// Autodesk.Viewing.Model.prototype.getProperties = function (dbId, onSuccessCallback, onErrorCallback) {
-//     if (!this.myData || !this.myLoader)
-//         return;
-
-//     this.myLoader.getProperties(dbId, onSuccessCallback, onErrorCallback);
-// };
-
-var btnClickTest = document.getElementById('btnTest');
-btnClickTest.addEventListener('click', function () {
-
-    var selectionIdDbText = document.getElementById('IdDb');
-    var nodeNameText = document.getElementById('nodeName');
-    // Property - Číslo součásti
-    var propertyValue1Text = document.getElementById('propertyValue1');
-    var propertyName = "Číslo součásti";
-    
-
-    var selectionIdDb = viewer.getSelection();
-    var selectionModelName = selectionIdDb.displayName;
-    var selectionCount = viewer.getSelectionCount();
-    var activeUrn = viewer.model.getData().urn;
-    var nodeName = viewer.modelstructure.instanceTree.getNodeName(selectionIdDb);
-    
-    var getProperty1 = getProperties(selectionIdDb,propertyName);
-
-    selectionIdDbText.innerText = selectionIdDb;
-    nodeNameText.innerText = nodeName;
- 
-    // console.log(propertyValue1Text);
-    propertyValue1Text.innerText = getProperty1;
-    
-});
-
-// Get Properties from selected child
-function getProperties(dbId, propName) {
-     
-    viewer.model.getBulkProperties(dbId, propName, function (objProperties) {
-        
-        if (dbId.length === 1) {
-            objProperties[0].properties.forEach(i => {
-                if (i.displayName === propName) {
-                    
-                    propValue = i.displayValue;
-
-                    return propValue;
-                };
-            });
-        }
-        else 
-        {
-            console.log("Je vybráno více jak jedna součást")
-        }
-    });
-    return propValue;
-};
-
 var btnClickBackgroud1 = document.getElementById('btnBackgrd1');
 btnClickBackgroud1.addEventListener('click', function () {
     changeBackground();
-});
+})
 
 var btnClickBackgroundReset = document.getElementById('btnBackgrdReset');
 btnClickBackgroundReset.addEventListener('click', function () {
     resetBackground();
-});
+})
+
+var btnClickTest = document.getElementById('btnTest');
+btnClickTest.addEventListener('click', function () {
+
+    viewer.addEventListener(
+        Autodesk.Viewing.SELECTION_CHANGED_EVENT,
+        onSelectionChanged);
+})
+
+function onSelectionChanged(event) {
+
+    var selectionIdDbText = document.getElementById('IdDb');
+    var nodeNameText = document.getElementById('nodeName');
+    var propertyValue1Text = document.getElementById('propertyValue1');
+    var selectionIdDb = viewer.getSelection();
+
+    // Property - Číslo součásti
+    var propertyName = "Číslo součásti";
+
+    var getProperty1 = getProperties(selectionIdDb, propertyName);
+
+    var selectionModelName = selectionIdDb.displayName;
+    var selectionCount = viewer.getSelectionCount();
+    var activeUrn = viewer.model.getData().urn;
+    var nodeName = viewer.modelstructure.instanceTree.getNodeName(selectionIdDb);
+    // getProperty1 = getProperties(selectionIdDb, propertyName);
+    setPartNumber(selectionIdDb);
+    // propertyValue1Text.innerText = getProperty1;
+    selectionIdDbText.innerText = selectionIdDb;
+    nodeNameText.innerText = nodeName;
+}
+
+
+var myPropValue = null;
+function getProperties(dbId, propName, callback) {
+
+    viewer.model.getBulkProperties(dbId, propName, function (objProperties) {
+        var propertyArray = objProperties[0].properties;
+
+        for (var i = 0; i < propertyArray.length; i++) {
+
+            if (propertyArray[i].displayName == propName) {
+                // myPropValue = null;
+                myPropValue = propertyArray[i].displayValue;
+
+                // console.log("První log: " + myPropValue);
+
+                callback(myPropValue);
+            }
+
+        }
+    })
+
+}
+
+function setPartNumberText(params) {
+    var propertyValue1Text = document.getElementById('propertyValue1');
+    propertyValue1Text.innerText = params;
+}
+
+function setPartNumber(selectionIdDb) {
+    getProperties(selectionIdDb, "Číslo součásti", setPartNumberText)
+}
+
+viewer.removeEventListener(
+    Autodesk.Viewing.SELECTION_CHANGED_EVENT,
+    onSelectionChanged);
+
+// //////////////////////////////////////////////////////////////////////////////////
+// Context menu add cmd
+/////////////////////////////////////////////////////////////////////////////////////
+
+
 
 /////////////////////////////////////////////////////////////////////////////////
 //
@@ -235,7 +222,7 @@ btnClickBackgroundReset.addEventListener('click', function () {
 /////////////////////////////////////////////////////////////////////////////////
 
 function changeBackground() {
-    viewer.setBackgroundColor(150, 59, 111, 255, 255, 255);
+    viewer.setBackgroundColor(51, 51, 204, 255, 255, 255);
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -283,6 +270,7 @@ function loadControlSelector() {
     viewer.loadExtension('_Viewing.Extension.ControlSelector');
 }
 
-// function getProperties(){
-//     viewer.loadExtension('Viewing.Extension.MetaProperty')
-// }
+function EventsTutorial() {
+    viewer.loadExtension('Autodesk.ADN.Viewing.Extension.EventWatcher.js');
+}
+

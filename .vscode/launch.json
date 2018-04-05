@@ -10,7 +10,10 @@
             "request": "launch",
             "name": "Launch Chrome against localhost",
             "url": "http://localhost:3030/forge.html",
-            "webRoot": "${workspaceFolder}"
+            "webRoot": "${workspaceFolder}",
+            "sourceMaps": true ,
+            "cwd": "${workspaceFolder}"
+            
         }
     ]
 }

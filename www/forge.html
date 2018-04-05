@@ -26,8 +26,23 @@
     <!-- Your custom styles (optional) -->
     <link href="css/style.css" rel="stylesheet">
 
-    <!-- <script src="js/jquery.min.js"></script> -->
-    <!-- <script src="js/moment.min.js"></script> -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+     <!-- The Viewer CSS -->
+     <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/style.min.css?v=v3.3.*" type="text/css">
+     <!-- <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/style.min.css" type="text/css"> -->
+ 
+     <!-- Viewer production -->
+     <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/three.min.js?v=v3.3.*"></script>
+     <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/viewer3D.min.js?v=v3.3.*"></script>
+     <!-- <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/wgs.min.js?v=v3.3"></script> -->
+     <!-- <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/webvr-polyfill.min.js?v=3.3"></script>
+     <link rel="stylesheet" type="text/css" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/extensions/WebVR/WebVR.css?v=3.3">
+     <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/extensions/Markups/MarkupsGui.js?v=3.3"></script>
+     <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/extensions/WebVR/WebVR.js?v=3.3"></script>
+     <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/wgs.js?v=3.3"></script> -->
    
 
     <!-- Developer CSS -->
@@ -106,6 +121,7 @@
                             <a class="dropdown-item" href="https://forge-parker-poc.herokuapp.com">Parker viewer</a>
                             <a class="dropdown-item" href="https://viewer-rocks.autodesk.io/">React viewer</a>
                             <a class="dropdown-item" href="https://derivatives.autodesk.io/">Data Management</a>
+                            <a class="dropdown-item" href="https://forge-rcdb.autodesk.io/configurator/">Others demos</a>
                         </div>
                     </li>
 
@@ -194,7 +210,7 @@
                             <ul>
                                 <!-- <li id="label1"> -->
                                 <div class="btn bg-blue" id="btnTest">
-                                    Component name
+                                    Load Event Select
                                 </div>
 
                                 <div class="btn bg-blue" id="btnBackgrd1">
@@ -204,17 +220,19 @@
                                 <div class="btn bg-blue" id="btnBackgrdReset">
                                     Reset Background
                                 </div>
+
                                 <br>
                                 <br>
                                 <br>
-                                <h3>SelectionIdDb</h3>
-                                <p id="IdDb"></p>
+                                
+                                <h3 class="small">SelectionIdDb</h3>
+                                <p id="IdDb" class="small"></p>
                                 <br>
-                                <h3>SelectionNodeName</h3>
-                                <p id="nodeName"></p>
+                                <h3 class="small">SelectionNodeName</h3>
+                                <p id="nodeName" class="small"></p>
                                 <br>
-                                <h3>PartNumber</h3>
-                                <p id="propertyValue1"></p>
+                                <h3 class="small">PartNumber</h3>
+                                <p id="propertyValue1" class="small"></p>
                                 <!-- <a class="col-md-2 red text-center text-white" href="#test" title="Test">Test</a> -->
                                 <!-- </li> -->
                             </ul>
@@ -305,19 +323,7 @@
 
         <!-- <script src="js/bootstrap.min.js"></script> -->
 
-        <!-- The Viewer CSS -->
-        <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/style.min.css?v=v3.3.*" type="text/css">
-        <!-- <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/style.min.css" type="text/css"> -->
-    
-        <!-- Viewer production -->
-        <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/three.min.js?v=v3.3"></script>
-        <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/viewer3D.min.js?v=v3.3"></script>
-        <!-- <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/wgs.min.js?v=v3.3"></script> -->
-        <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/webvr-polyfill.min.js?v=3.3"></script>
-        <link rel="stylesheet" type="text/css" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/extensions/WebVR/WebVR.css?v=3.3">
-        <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/extensions/Markups/MarkupsGui.js?v=3.3"></script>
-        <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/extensions/WebVR/WebVR.js?v=3.3"></script>
-        <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/wgs.js?v=3.3"></script>
+       
 
         <!-- <script src="GET https://developer.api.autodesk.com/modelderivative/v2/designdata/:urn/metadata/:guid/properties"></script> -->
         <!-- <script src="js/extensions/Autodesk.ADN.Viewing.Extension.Chart.js"></script> -->
@@ -336,6 +342,7 @@
         <!-- <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/three.min.js"></script>
         <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/viewer3D.min.js"></script> -->
         <!-- Developer JS Forge Viewer -->
+        <script src="js/extensions/Autodesk.ADN.Viewing.Extension.EventWatcher.js"></script>
         <script type="text/javascript" src="js/oauth.js"></script>
         <script type="text/javascript" src="js/forge.viewer.js"></script>
         <!-- <script language="JavaScript" src="js/scripts.js"></script> -->
