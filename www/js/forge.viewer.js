@@ -27,9 +27,10 @@ myEl.addEventListener('click', function () {
 var myE2 = document.getElementById('btn2');
 myE2.addEventListener('click', function () {
     documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE4LTAyLTI4LTExLTQ0LTQzLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL1NIQUZULmlwdA';
-
     Autodesk.Viewing.Initializer(options, function onInitialized() {
         Autodesk.Viewing.Document.load(documentId, onDocumentLoadSuccess, onDocumentLoadFailure);
+       
+        
         viewer.loadModel();
 
     });
@@ -57,6 +58,12 @@ myE3.addEventListener('click', function () {
 * Autodesk.Viewing.Document.load() success callback.
 * Proceeds with model initialization.
 */
+function removeControls(viewer,buttonName) {
+    var controlToolbar;
+    controlToolbar = viewer.toolbar.getControl('modelTools');
+    controlToolbar.removeControl(buttonName);
+}
+
 function onDocumentLoadSuccess(doc) {
 
     // A document contains references to 3D and 2D viewables.
@@ -75,6 +82,8 @@ function onDocumentLoadSuccess(doc) {
     viewer = new Autodesk.Viewing.Private.GuiViewer3D(viewerDiv);
     var errorCode = viewer.start();
 
+    
+   
     // Check for initialization errors.
     if (errorCode) {
         console.error('viewer.start() error - errorCode:' + errorCode);
@@ -95,8 +104,10 @@ function loadModel() {
     var modelOptions = {
         sharedPropertyDbPath: lmvDoc.getPropertyDbPath()
     };
+    
     viewer.loadModel(svfUrl, modelOptions, onLoadModelSuccess, onLoadModelError);
 }
+
 
 /**
  * Autodesk.Viewing.Document.load() failuire callback.
@@ -123,6 +134,8 @@ function onLoadModelSuccess(model) {
     console.log('onLoadModelSuccess()!');
     console.log('Validate model loaded: ' + (viewer.model === model));
     console.log(model);
+    // Odebre požadované ikony z toolbaru
+    removeControls (viewer,'toolbar-explodeTool');
 }
 /**
  * viewer.loadModel() failure callback.
@@ -205,9 +218,38 @@ function setPartNumber(selectionIdDb) {
     getProperties(selectionIdDb, "Číslo součásti", setPartNumberText)
 }
 
+viewer.contextMenuCallbacks('MyButtons',(menu,status)=>{
+    if(status.hasSelected){
+        menu.push({
+            title: 'MyButton 1',
+            target: ()=>{
+                const selSet = this.viewer.getSelection();
+                this.viewer.clearSelection();
+
+                const color = new THREE.Vector4(255/2585,0,0,1);
+                for(let i = 0;i<selSet.length;i++){
+                    this.viewer.setThemingColor(selSet[i],color);
+                }
+            }
+        });
+
+    }else{
+        menu.push({
+            title: 'Clear overridden color',
+            target: () => {
+                this.viewer.clearThemingColors();
+            }
+        });
+    
+    }
+});
+
+
 viewer.removeEventListener(
     Autodesk.Viewing.SELECTION_CHANGED_EVENT,
     onSelectionChanged);
+
+    (this.viewer.toolbar.getControl('modelTools')).setToolTip('Neco')
 
 // //////////////////////////////////////////////////////////////////////////////////
 // Context menu add cmd
