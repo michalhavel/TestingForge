@@ -29,8 +29,8 @@ myE2.addEventListener('click', function () {
     documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE4LTAyLTI4LTExLTQ0LTQzLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL1NIQUZULmlwdA';
     Autodesk.Viewing.Initializer(options, function onInitialized() {
         Autodesk.Viewing.Document.load(documentId, onDocumentLoadSuccess, onDocumentLoadFailure);
-       
-        
+
+
         viewer.loadModel();
 
     });
@@ -58,10 +58,74 @@ myE3.addEventListener('click', function () {
 * Autodesk.Viewing.Document.load() success callback.
 * Proceeds with model initialization.
 */
-function removeControls(viewer,buttonName) {
+// Funkce pro odebrání tlačítek z toobaru
+function removeControls(viewer, buttonName) {
     var controlToolbar;
     controlToolbar = viewer.toolbar.getControl('modelTools');
     controlToolbar.removeControl(buttonName);
+}
+
+// Funkce pro přidání tlačítka do kontextového menu
+
+function addBtnContextMenu(viewer) {
+    viewer.registerContextMenuCallback('MyMenu', (menu, status) => {
+        if (status.hasSelected) {
+            addColorBtn(menu, viewer, 'Red', new THREE.Vector4(255, 0, 0, 1));
+            addColorBtn(menu, viewer, 'Green', new THREE.Vector4(0, 255, 0, 1));
+            addEventSelBtn(menu, viewer, 'Load Event Select');
+            addDisableEventSelBtn(menu,viewer,'Unload Event Select');
+
+        } else {
+            menu.push({
+                title: 'Clear overridden color',
+                target: () => {
+                    viewer.clearThemingColors();
+                }
+            });
+        }
+    });
+}
+
+function addColorBtn(menu, viewer, btnColorName, colorRgb) {
+    menu.push({
+        title: btnColorName,
+        target: () => {
+            const selSet = viewer.getSelection();
+            viewer.clearSelection();
+            const color = colorRgb;
+            for (let i = 0; i < selSet.length; i++) {
+                viewer.setThemingColor(selSet[i], color);
+            }
+        }
+    });
+}
+
+function addEventSelBtn(menu, viewer, btnName) {
+    menu.push({
+        title: btnName,
+        target: () => {
+            const selSet = viewer.getSelection();
+                 viewer.addEventListener(
+                Autodesk.Viewing.SELECTION_CHANGED_EVENT,
+                onSelectionChanged);
+
+        }
+    });
+
+}
+
+function addDisableEventSelBtn(menu, viewer, btnName) {
+    menu.push({
+        title: btnName,
+        target: () => {
+            const selSet = viewer.getSelection();
+            viewer.removeEventListener(
+                Autodesk.Viewing.SELECTION_CHANGED_EVENT,
+                onSelectionChanged);
+
+        }
+    });
+
 }
 
 function onDocumentLoadSuccess(doc) {
@@ -82,8 +146,8 @@ function onDocumentLoadSuccess(doc) {
     viewer = new Autodesk.Viewing.Private.GuiViewer3D(viewerDiv);
     var errorCode = viewer.start();
 
-    
-   
+
+
     // Check for initialization errors.
     if (errorCode) {
         console.error('viewer.start() error - errorCode:' + errorCode);
@@ -104,7 +168,7 @@ function loadModel() {
     var modelOptions = {
         sharedPropertyDbPath: lmvDoc.getPropertyDbPath()
     };
-    
+
     viewer.loadModel(svfUrl, modelOptions, onLoadModelSuccess, onLoadModelError);
 }
 
@@ -135,7 +199,8 @@ function onLoadModelSuccess(model) {
     console.log('Validate model loaded: ' + (viewer.model === model));
     console.log(model);
     // Odebre požadované ikony z toolbaru
-    removeControls (viewer,'toolbar-explodeTool');
+    removeControls(viewer, 'toolbar-explodeTool');
+    addBtnContextMenu(viewer);
 }
 /**
  * viewer.loadModel() failure callback.
@@ -218,38 +283,38 @@ function setPartNumber(selectionIdDb) {
     getProperties(selectionIdDb, "Číslo součásti", setPartNumberText)
 }
 
-viewer.contextMenuCallbacks('MyButtons',(menu,status)=>{
-    if(status.hasSelected){
+viewer.contextMenuCallbacks('MyButtons', (menu, status) => {
+    if (status.hasSelected) {
         menu.push({
             title: 'MyButton 1',
-            target: ()=>{
+            target: () => {
                 const selSet = this.viewer.getSelection();
                 this.viewer.clearSelection();
 
-                const color = new THREE.Vector4(255/2585,0,0,1);
-                for(let i = 0;i<selSet.length;i++){
-                    this.viewer.setThemingColor(selSet[i],color);
+                const color = new THREE.Vector4(255 / 2585, 0, 0, 1);
+                for (let i = 0; i < selSet.length; i++) {
+                    this.viewer.setThemingColor(selSet[i], color);
                 }
             }
         });
 
-    }else{
+    } else {
         menu.push({
             title: 'Clear overridden color',
             target: () => {
                 this.viewer.clearThemingColors();
             }
         });
-    
+
     }
 });
 
 
-viewer.removeEventListener(
-    Autodesk.Viewing.SELECTION_CHANGED_EVENT,
-    onSelectionChanged);
+// viewer.removeEventListener(
+//     Autodesk.Viewing.SELECTION_CHANGED_EVENT,
+//     onSelectionChanged);
 
-    (this.viewer.toolbar.getControl('modelTools')).setToolTip('Neco')
+// (this.viewer.toolbar.getControl('modelTools')).setToolTip('Neco')
 
 // //////////////////////////////////////////////////////////////////////////////////
 // Context menu add cmd
