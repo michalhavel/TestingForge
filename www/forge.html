@@ -30,20 +30,20 @@
     <script src="js/moment.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
-     <!-- The Viewer CSS -->
-     <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/style.min.css?v=v3.3.*" type="text/css">
-     <!-- <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/style.min.css" type="text/css"> -->
- 
-     <!-- Viewer production -->
-     <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/three.min.js?v=v3.3.*"></script>
-     <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/viewer3D.min.js?v=v3.3.*"></script>
-     <!-- <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/wgs.min.js?v=v3.3"></script> -->
-     <!-- <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/webvr-polyfill.min.js?v=3.3"></script>
+    <!-- The Viewer CSS -->
+    <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/style.min.css?v=v3.3.*" type="text/css">
+    <!-- <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/style.min.css" type="text/css"> -->
+
+    <!-- Viewer production -->
+    <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/three.min.js?v=v3.3.*"></script>
+    <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/viewer3D.min.js?v=v3.3.*"></script>
+    <!-- <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/wgs.min.js?v=v3.3"></script> -->
+    <!-- <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/webvr-polyfill.min.js?v=3.3"></script>
      <link rel="stylesheet" type="text/css" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/extensions/WebVR/WebVR.css?v=3.3">
      <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/extensions/Markups/MarkupsGui.js?v=3.3"></script>
      <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/extensions/WebVR/WebVR.js?v=3.3"></script>
      <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/wgs.js?v=3.3"></script> -->
-   
+
 
     <!-- Developer CSS -->
     <style>
@@ -224,7 +224,7 @@
                                 <br>
                                 <br>
                                 <br>
-                                
+
                                 <h3 class="small">SelectionIdDb</h3>
                                 <p id="IdDb" class="small"></p>
                                 <br>
@@ -240,6 +240,54 @@
                         </div>
 
                     </div>
+                </div>
+                <br>
+                <h1 class="text-center white-text green">Seznam</h1>
+                <br>
+                <!-- <div class="row"> -->
+
+                    <!-- 
+                    <input type="text" id="tb1" value="5">
+                    <input type="text" id="tb2" value="2">
+                    <br>
+                    <br>
+                    <br> -->
+                     <!-- <p id="myTable" class="col-5"> -->
+   
+                    <!--Table-->
+                    <table class="table table-responsive-md">
+
+                        <!--Table head-->
+                        <thead class="green">
+                            <tr>
+                                <th>#</th>
+                                <th class="th-lg">Název</th>
+                                <th class="th-lg">Číslo součásti</th>
+                                <th class="th-lg">Skladové číslo</th>
+                                <th class="th-lg">Ks</th>
+                            </tr>
+                        </thead>
+                        <!--Table head-->
+
+                        <!--Table body-->
+                        <tbody id="myTable"></tbody>
+                        <!-- <tbody>
+                            <tr class="white-text"> -->
+                                
+                                <!-- <th scope="row">1</th>
+                                <td id="tbName">-</td>
+                                <td id="tbPartNumber">-</td>
+                                <td id="tbStockNumber">-</td>
+                                <td id="tbQty">-</td> -->
+
+                                
+                            <!-- </tr> -->
+              
+                        <!-- </tbody> -->
+                        <!--Table body-->
+
+                    </table>
+                    <!--Table-->
                 </div>
 
 
@@ -323,13 +371,74 @@
 
         <!-- <script src="js/bootstrap.min.js"></script> -->
 
-       
+
 
         <!-- <script src="GET https://developer.api.autodesk.com/modelderivative/v2/designdata/:urn/metadata/:guid/properties"></script> -->
         <!-- <script src="js/extensions/Autodesk.ADN.Viewing.Extension.Chart.js"></script> -->
-    
+
         <!-- SCRIPTS -->
-    
+        <!-- <script>
+            function createTable() {
+                var a, b, tableElem, rowElem, colElem;
+
+                a = document.getElementById('tb1').value;
+                b = document.getElementById('tb2').value;
+
+                if (a == "" || b == "") {
+                    alert("Please enter some numeric value");
+                } else {
+                    tableElem = document.createElement('table');
+
+                    for (var i = 0; i < a; i++) {
+                        rowElem = document.createElement('tr');
+
+                        for (var j = 0; j < b; j++) {
+                            colElem = document.createElement('td');
+                            colElem.appendChild(document.createTextNode(j + 1)); //to print cell number
+                            rowElem.appendChild(colElem);
+                        }
+
+                        tableElem.appendChild(rowElem);
+                    }
+
+                    document.body.appendChild(tableElem);
+
+                }
+            }
+
+        </script> -->
+        <script type="text/javascript">
+
+            function createTable() {
+
+                var a = document.getElementById("tb1").value;
+                var b = document.getElementById("tb2").value;
+                var resultTable = '<table>';
+
+                if (a == "" || b == "") {
+                    alert("Please enter some numeric value");
+                } else {
+                    for (var i = 0; i < parseInt(a); i++) {
+                        resultTable += '<tr>';
+                        for (var j = 0; j < parseInt(b); j++)
+                            resultTable += '<td><\/td>';
+                    }
+                    resultTable += '<\/tr>';
+
+                }
+                resultTable += '<\/table';
+                return resultTable;
+            }
+
+            var target = document.getElementById('myTable____');
+            target.innerHTML = createTable();
+
+            var click = document.getElementById('btnTable');
+            click.addEventListener('click', function () {
+
+            })
+        </script>
+
         <!-- JQuery -->
         <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
         <!-- Bootstrap tooltips -->
@@ -350,11 +459,11 @@
         <!-- <script type ="text/javascript" src="js/reportData.js"></script> -->
         <!-- <script src="extensions/Viewing.Extension.MetaProperty/Viewing.Extension.MetaProperty.js"></script> -->
         <!-- <script src="extensions/Autodesk.ADN.Viewing.Extension.js"></script> -->
-    
+
         <!-- <script src="js/libraries/d3.min.js"></script>
         <script src="js/libraries/d3pie.min.js"></script>
         <script src="js/libraries/nv.d3.min.js"></script> -->
-    
+
         <!-- BIM360 packages: login and authentication -->
         <!-- <script src="js/oauth.js"></script> -->
         <!-- <script src="js/forge.data.management.js"></script>
@@ -363,13 +472,13 @@
             <script src="js/barchart.js"></script>
             <script src="js/piechart.js"></script> -->
         <!-- Notification ballons -->
-    
+
         <!-- <script src="js/libraries/notify.min.js"></script> -->
-    
+
         <!-- <script type="text/javascript" src="extensions/Autodesk.ADN.Viewing.Extension.ControlSelector.js"></script> -->
         <!-- <script src="js/components/Viewer/Viewer-helpers.js" type="module"></script> -->
-    
-    
+
+
         <!-- The Viewer Extensions -->
         <!--<script src="/extensions/Viewing.Extension.Markup3D.min.js"></script>-->
         <!--<script src="/extensions/Viewing.Extension.Transform.min.js"></script>-->

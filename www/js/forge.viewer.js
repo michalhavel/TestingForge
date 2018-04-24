@@ -65,15 +65,17 @@ function removeControls(viewer, buttonName) {
     controlToolbar.removeControl(buttonName);
 }
 
-// Funkce pro přidání tlačítka do kontextového menu
-
+// Funkce pro přidání tlačítek do kontextového menu
 function addBtnContextMenu(viewer) {
     viewer.registerContextMenuCallback('MyMenu', (menu, status) => {
         if (status.hasSelected) {
             addColorBtn(menu, viewer, 'Red', new THREE.Vector4(255, 0, 0, 1));
             addColorBtn(menu, viewer, 'Green', new THREE.Vector4(0, 255, 0, 1));
             addEventSelBtn(menu, viewer, 'Load Event Select');
-            addDisableEventSelBtn(menu,viewer,'Unload Event Select');
+            addDisableEventSelBtn(menu, viewer, 'Unload Event Select');
+            addToList(menu, viewer, 'To List');
+            addClearList(menu, viewer, 'Clear List');
+            addCreateTable(menu, viewer, 'Create table');
 
         } else {
             menu.push({
@@ -105,7 +107,7 @@ function addEventSelBtn(menu, viewer, btnName) {
         title: btnName,
         target: () => {
             const selSet = viewer.getSelection();
-                 viewer.addEventListener(
+            viewer.addEventListener(
                 Autodesk.Viewing.SELECTION_CHANGED_EVENT,
                 onSelectionChanged);
 
@@ -128,6 +130,91 @@ function addDisableEventSelBtn(menu, viewer, btnName) {
 
 }
 
+//----------------------------------------------------------------------------------
+//Funkce ToList - pridani properties do tabulky z oznacene soucasti
+function addToList(menu, viewer, btnName) {
+    menu.push({
+        title: btnName,
+        target: () => {
+            const selSet = getSelection();
+
+            //Zapnuti onselection event
+            viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT,
+                onSelectionChanged);
+
+            // Ted se musi spustit ziskani vsech vlastnosti
+            var selectionIdDb = viewer.getSelection();
+
+            // Hodnoty do tabulky
+            setPartNumber(selectionIdDb);
+            setStockNumber(selectionIdDb);
+            setName(selectionIdDb);
+
+            var tbQtyText = document.getElementById('tbQty');
+            tbQtyText.innerText = viewer.getSelectionCount();
+
+            //Vypnuti onselection event
+            viewer.removeEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT,
+                onSelectionChanged);
+
+        }
+    })
+}
+//-----------------------------------------------------------------------------------------
+
+//Funkce na pridavani radku do tabulky (kusovniku)
+//Pro kazdy oznacenou komponentu se zalozi radek a vyplni se property
+
+function addCreateTable(menu, viewer, btnName) {
+    menu.push({
+        title: btnName,
+        target: () => {
+
+            var target = document.getElementById('myTable');
+            target.innerHTML = createTable();
+
+            var selectionIdDb = viewer.getSelection();
+            setName(selectionIdDb);
+            setPartNumber(selectionIdDb);
+            setStockNumber(selectionIdDb);
+            var tbQtyText = document.getElementById('tbQty');
+            tbQtyText.innerText = viewer.getSelectionCount();
+        }
+
+    })
+
+}
+function createTable() {
+    var resultTable = '';
+    var selectedArray = viewer.getSelection();
+    for (var i = 0; i < selectedArray.length; i++) {
+        // const element = selectedArray[i];
+        resultTable += '<tr class="white-text"><th scope="row"->'
+        resultTable += '<\/th><td id="tbName"'
+        resultTable+= '>-<\/td>'
+        resultTable += '<td id="tbPartNumber">-<\/td><td id="tbStockNumber">-<\/td><td id="tbQty">-<\/td><\/tr>';
+        
+    }
+    // resultTable += '<tr><\/tr>';
+    
+    return resultTable;
+}
+
+
+//------------------------------------------------------------------------------------------
+//Kontetove tlacisko na vycisteni tabulky
+function addClearList(menu, viewer, btnName) {
+    menu.push({
+        title: btnName,
+        target: () => {
+            document.getElementById('tbQty').innerText = "-";
+            document.getElementById('tbName').innerText = "-";
+            document.getElementById('tbStockNumber').innerText = "-";
+            document.getElementById('tbPartNumber').innerText = "-";
+
+        }
+    })
+}
 function onDocumentLoadSuccess(doc) {
 
     // A document contains references to 3D and 2D viewables.
@@ -235,23 +322,26 @@ function onSelectionChanged(event) {
     var propertyValue1Text = document.getElementById('propertyValue1');
     var selectionIdDb = viewer.getSelection();
 
-    // Property - Číslo součásti
-    var propertyName = "Číslo součásti";
-
-    var getProperty1 = getProperties(selectionIdDb, propertyName);
-
-    var selectionModelName = selectionIdDb.displayName;
-    var selectionCount = viewer.getSelectionCount();
-    var activeUrn = viewer.model.getData().urn;
     var nodeName = viewer.modelstructure.instanceTree.getNodeName(selectionIdDb);
     // getProperty1 = getProperties(selectionIdDb, propertyName);
-    setPartNumber(selectionIdDb);
+    // setPartNumber(selectionIdDb);
+
     // propertyValue1Text.innerText = getProperty1;
     selectionIdDbText.innerText = selectionIdDb;
     nodeNameText.innerText = nodeName;
+
+    // // Property - Číslo součásti
+    // var propertyName = "Číslo součásti";
+
+    // var getProperty1 = getProperties(selectionIdDb, propertyName);
+
+    // var selectionModelName = selectionIdDb.displayName;
+    // var selectionCount = viewer.getSelectionCount();
+    // var activeUrn = viewer.model.getData().urn;
+
 }
-
-
+//------------------------------------------------------------------------------
+//Funkce na ziskani libovolne property z oznacene komponenty
 var myPropValue = null;
 function getProperties(dbId, propName, callback) {
 
@@ -273,16 +363,39 @@ function getProperties(dbId, propName, callback) {
     })
 
 }
-
+//----------------------------------------------------------------------------------
+//Získání a nastavení čísla součásti
 function setPartNumberText(params) {
-    var propertyValue1Text = document.getElementById('propertyValue1');
+    var propertyValue1Text = document.getElementById('tbPartNumber');
     propertyValue1Text.innerText = params;
 }
 
 function setPartNumber(selectionIdDb) {
     getProperties(selectionIdDb, "Číslo součásti", setPartNumberText)
 }
+//-------------------------------------------------------------------
+//Ziskani a nastaveni skladoveho cisla
+function setStockNumberText(params) {
+    var propertyValue1Text = document.getElementById('tbStockNumber');
+    propertyValue1Text.innerText = params;
+}
 
+function setStockNumber(selectionIdDb) {
+    getProperties(selectionIdDb, "Skladové číslo", setStockNumberText)
+}
+
+//Ziskani a nastaveni jmena
+function setNameText(params) {
+    var propertyValue1Text = document.getElementById('tbName');
+    propertyValue1Text.innerText = params;
+}
+
+function setName(selectionIdDb) {
+    getProperties(selectionIdDb, "Název", setNameText)
+}
+//-----------------------------------------------------------------
+
+//Priklad na pridani tlacitka do kontextoveho menu
 viewer.contextMenuCallbacks('MyButtons', (menu, status) => {
     if (status.hasSelected) {
         menu.push({
