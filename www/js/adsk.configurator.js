@@ -108,6 +108,19 @@
                         });
                     });
 
+                    var myEl8 = document.getElementById('btn8');
+                    myEl8.addEventListener('click', function () {
+
+                        // Initialize the viewer
+                        C360.initViewer({
+                            container: "myViewer",
+                            design: "1037219241570006066/1bn78zsvdd5m",
+                            panes: true,
+                            success: viewerLoaded, // Set success handler
+                            error: failedToLoad // Set error handler
+                        });
+                    });
+
 
 
                 } else {
