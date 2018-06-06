@@ -10,8 +10,6 @@ var options = {
     getAccessToken: getForgeToken
 }
 
-// GET https://developer.api.autodesk.com/modelderivative/v2/designdata/:urn/metadata/:guid/properties
-
 var documentId;
 
 var myEl = document.getElementById('btn1');
@@ -460,31 +458,31 @@ function getProperties(dbId, propName, callback) {
 //-----------------------------------------------------------------
 
 //Priklad na pridani tlacitka do kontextoveho menu
-viewer.contextMenuCallbacks('MyButtons', (menu, status) => {
-    if (status.hasSelected) {
-        menu.push({
-            title: 'MyButton 1',
-            target: () => {
-                const selSet = this.viewer.getSelection();
-                this.viewer.clearSelection();
+// viewer.contextMenuCallbacks('MyButtons', (menu, status) => {
+//     if (status.hasSelected) {
+//         menu.push({
+//             title: 'MyButton 1',
+//             target: () => {
+//                 const selSet = this.viewer.getSelection();
+//                 this.viewer.clearSelection();
 
-                const color = new THREE.Vector4(255 / 2585, 0, 0, 1);
-                for (let i = 0; i < selSet.length; i++) {
-                    this.viewer.setThemingColor(selSet[i], color);
-                }
-            }
-        });
+//                 const color = new THREE.Vector4(255 / 2585, 0, 0, 1);
+//                 for (let i = 0; i < selSet.length; i++) {
+//                     this.viewer.setThemingColor(selSet[i], color);
+//                 }
+//             }
+//         });
 
-    } else {
-        menu.push({
-            title: 'Clear overridden color',
-            target: () => {
-                this.viewer.clearThemingColors();
-            }
-        });
+//     } else {
+//         menu.push({
+//             title: 'Clear overridden color',
+//             target: () => {
+//                 this.viewer.clearThemingColors();
+//             }
+//         });
 
-    }
-});
+//     }
+// });
 
 
 // viewer.removeEventListener(
