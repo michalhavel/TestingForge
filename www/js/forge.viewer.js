@@ -10,7 +10,11 @@ var options = {
     getAccessToken: getForgeToken
 }
 
-var documentId;
+var documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE4LTAyLTI4LTA4LTI1LTE0LWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL0QtNjIwLTAwMC1ObyUyMEV4cHJlc3MuZHdmeA';
+Autodesk.Viewing.Initializer(options,function onInitialized(){
+    Autodesk.Viewing.Document.load(documentId, onDocumentLoadSuccess, onDocumentLoadFailure);
+    viewer.loadModel();
+})
 
 var myEl = document.getElementById('btn1');
 myEl.addEventListener('click', function () {
@@ -47,6 +51,25 @@ myE3.addEventListener('click', function () {
     });
 });
 
+var myE4 = document.getElementById('btn4');
+myE4.addEventListener('click', function () {
+    documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE4LTA2LTI4LTE0LTA4LTIxLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL1AwMDIuZHdmeA';
+    Autodesk.Viewing.Initializer(options, function onInitialized() {
+        Autodesk.Viewing.Document.load(documentId, onDocumentLoadSuccess, onDocumentLoadFailure);
+        viewer.loadModel();
+    });
+});
+
+
+var myE5 = document.getElementById('btn5');
+myE5.addEventListener('click', function () {
+    documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE4LTA3LTI0LTExLTM4LTMwLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL0QwMDE3Njc4LmlwdA';
+    Autodesk.Viewing.Initializer(options, function onInitialized() {
+        Autodesk.Viewing.Document.load(documentId, onDocumentLoadSuccess, onDocumentLoadFailure);
+        viewer.loadModel();
+    });
+});
+
 // Autodesk.Viewing.Initializer(options, function onInitialized() {
 //     Autodesk.Viewing.Document.load(documentId, onDocumentLoadSuccess, onDocumentLoadFailure);
 
@@ -72,7 +95,6 @@ function addBtnContextMenu(viewer) {
             addEventSelBtn(menu, viewer, 'Load Event Select');
             addDisableEventSelBtn(menu, viewer, 'Unload Event Select');
             addToList(menu, viewer, 'To List');
-            addClearList(menu, viewer, 'Clear List');
             addCreateTable(menu, viewer, 'Create table');
 
         } else {
@@ -82,7 +104,9 @@ function addBtnContextMenu(viewer) {
                     viewer.clearThemingColors();
                 }
             });
+            addCreateTable(menu, viewer, 'Clear List');
         }
+
     });
 }
 
@@ -211,6 +235,18 @@ function getProperyTb(propName, selectionIdDb, rowNum, propDisplayName) {
     //  return propertyNameText
 }
 
+// function getProp (selectionIdDb,propDisplayName) {
+//     // var propValue = '';
+
+//     function getPropValue (value){
+//         return value;
+//     }
+
+//     function getVaule(selectionIdDb) { 
+//         getProperties(selectionIdDb,propDisplayName,getPropValue)
+//     }
+//     getVaule(selectionIdDb);
+// }
 //Funkce na pridavani radku do tabulky (kusovniku)
 //Pro kazdy oznacenou komponentu se zalozi radek a vyplni se property
 
@@ -235,16 +271,30 @@ function addCreateTable(menu, viewer, btnName) {
             var selectionIdDb = viewer.getSelection();
             var selectedArray = viewer.getSelection();
             var rowNum = parseInt(0);
-            for (let i = 0; i < selSet.length; i++) {
+            
+            selectionIdDb.forEach(i => {
                 rowNum += parseInt(1);
 
-                getProperyTb('tbName',selSet, rowNum, "Název");
-                getProperyTb('tbStockNumber', selSet, rowNum, "Skladové číslo");
-                getProperyTb('tbPartNumber', selSet, rowNum, "Číslo součásti");
+                getProperyTb('tbName', [i], rowNum, "Název");
+                getProperyTb('tbStockNumber', [i], rowNum, "Skladové číslo");
+                getProperyTb('tbPartNumber', [i], rowNum, "Číslo součásti");
                 var tbQtyText = document.getElementById('tbQty');
-                tbQtyText.innerText = viewer.getSelectionCount();
-            }
+                tbQtyText.innerText = "1";//viewer.getSelectionCount();
+            });
+            // for (const i = 0; i < selSet.length; i++) {
 
+         
+
+                
+            // }
+
+            // for (let j = 0; j<selSet.length;j++){
+            //     try {
+                    
+            //     } catch (error) {
+                    
+            //     }
+            // }
             // setPartNumber(selectionIdDb);
             // setStockNumber(selectionIdDb);
             // var tbQtyText = document.getElementById('tbQty');
@@ -263,18 +313,19 @@ function addCreateTable(menu, viewer, btnName) {
 
 //------------------------------------------------------------------------------------------
 //Kontetove tlacisko na vycisteni tabulky
-function addClearList(menu, viewer, btnName) {
-    menu.push({
-        title: btnName,
-        target: () => {
-            document.getElementById('tbQty').innerText = "-";
-            document.getElementById('tbName').innerText = "-";
-            document.getElementById('tbStockNumber').innerText = "-";
-            document.getElementById('tbPartNumber').innerText = "-";
+// function addClearList(menu, viewer, btnName) {
+//     menu.push({
+//         title: btnName,
+//         target: () => {
+//             document.getElementById('tbQty').innerText = "-";
+//             document.getElementById('tbName').innerText = "-";
+//             document.getElementById('tbStockNumber').innerText = "-";
+//             document.getElementById('tbPartNumber').innerText = "-";
 
-        }
-    })
-}
+//         }
+//     })
+// }
+
 function onDocumentLoadSuccess(doc) {
 
     // A document contains references to 3D and 2D viewables.
@@ -383,7 +434,7 @@ function onSelectionChanged(event) {
     var selectionIdDb = viewer.getSelection();
 
     var nodeName = viewer.modelstructure.instanceTree.getNodeName(selectionIdDb);
-    // getProperty1 = getProperties(selectionIdDb, propertyName);
+    // getProperty1 = getProperties(selectionIdDb, "Číslo součásti");
     // setPartNumber(selectionIdDb);
 
     // propertyValue1Text.innerText = getProperty1;
@@ -423,6 +474,50 @@ function getProperties(dbId, propName, callback) {
     })
 
 }
+
+//---------------------------------------------------------------------//
+//Testovací fuknce pro zíkání properties
+// var skladoveCislo = null;
+// function completeGetProp(IdDb,propName) {
+      
+    
+
+    
+    var value1 = null; 
+    function test(selectedId,propName) {
+        
+        function getPropValue(selectedId,propName) {
+            
+            getProperties(selectedId,propName,setPropValue)
+            return value1;
+        }
+
+        getPropValue(selectedId,propName)
+        return value1;
+        // return value1;
+    }
+    
+    function setPropValue(value) {
+        // value1 = value;    
+        var message = document.getElementById('propertyValue1');
+        message.innerText = value;
+        
+        return value1 = value;
+    }
+
+    // getSkladoveCislo(IdDb)
+// }
+//----------------------------------------------------------------------//
+
+var pole = [];
+function testPole (){
+    pole = [];
+    viewer.getSelection().forEach(i => {
+        pole.push(test([i],"label"));
+    });
+    return pole;
+}
+
 //----------------------------------------------------------------------------------
 //Získání a nastavení čísla součásti
 // var propertyNameText = 'tbPartNumber'
@@ -489,7 +584,6 @@ function getProperties(dbId, propName, callback) {
 //     Autodesk.Viewing.SELECTION_CHANGED_EVENT,
 //     onSelectionChanged);
 
-// (this.viewer.toolbar.getControl('modelTools')).setToolTip('Neco')
 
 // //////////////////////////////////////////////////////////////////////////////////
 // Context menu add cmd
@@ -554,5 +648,41 @@ function loadControlSelector() {
 
 function EventsTutorial() {
     viewer.loadExtension('Autodesk.ADN.Viewing.Extension.EventWatcher.js');
+}function loadControlSelector() {
+    viewer.loadExtension('_Viewing.Extension.ControlSelector');
 }
 
+function EventsTutorial() {
+    viewer.loadExtension('Autodesk.ADN.Viewing.Extension.EventWatcher.js');
+}
+
+
+
+//Funkce pro testování
+//Výpočet objemu
+function volumeOfT(p1, p2, p3){
+    var v321 = p3.x*p2.y*p1.z;
+    var v231 = p2.x*p3.y*p1.z;
+    var v312 = p3.x*p1.y*p2.z;
+    var v132 = p1.x*p3.y*p2.z;
+    var v213 = p2.x*p1.y*p3.z;
+    var v123 = p1.x*p2.y*p3.z;
+    return (-v321 + v231 + v312 - v132 - v213 + v123)/6.0;
+}
+
+function calculateVolume(object){
+    var volumes = 0.0;
+
+    for(var i = 0; i < object.geometry.faces.length; i++){
+        var Pi = object.geometry.faces[i].a;
+        var Qi = object.geometry.faces[i].b;
+        var Ri = object.geometry.faces[i].c;
+
+        var P = new THREE.Vector3(object.geometry.vertices[Pi].x, object.geometry.vertices[Pi].y, object.geometry.vertices[Pi].z);
+        var Q = new THREE.Vector3(object.geometry.vertices[Qi].x, object.geometry.vertices[Qi].y, object.geometry.vertices[Qi].z);
+        var R = new THREE.Vector3(object.geometry.vertices[Ri].x, object.geometry.vertices[Ri].y, object.geometry.vertices[Ri].z);
+        volumes += volumeOfT(P, Q, R);
+    }
+
+    loadedObjectVolume = Math.abs(volumes);
+}

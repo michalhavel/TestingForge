@@ -9,7 +9,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
-            "url": "http://localhost:3030/forge.html",
+            "url": "http://localhost:3030/catalog.nd.html",
             "webRoot": "${workspaceFolder}",
             "sourceMaps": true ,
             "cwd": "${workspaceFolder}"

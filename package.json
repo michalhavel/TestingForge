@@ -33,6 +33,7 @@
     "mongodb": "^2.2.33",
     "morgan": "^1.9.0",
     "oauth": "^0.9.14",
+    "popper.js": "^1.14.3",
     "request": "^2.72.0",
     "serve-favicon": "^2.3.0",
     "trim": "^0.0.1"

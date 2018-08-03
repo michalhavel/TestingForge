@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <!-- <meta http-equiv="x-ua-Compatible" content="ie=edge"> -->
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=no" />
+
+    <title>Forge Katalog Náhradních Dílů</title>
+
+    <!-- Common packages: JQuery & Bootstrap -->
+    <link rel="shortcut icon" href="images/faviconCS.ico" type="image/x-icon" />
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="css/bootstrap-theme.min.css"> -->
+    <link rel="stylesheet" href="css/main.css">
+    <!-- <link rel="stylesheet" href="css/font-awesome.css"> -->
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.css" rel="stylesheet">
+
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/popper.js"></script>
+    <!-- <script src="js/popper.min.js"></script> -->
+
+
+    <!-- The Viewer CSS -->
+    <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/style.min.css?v=v3.3.*" type="text/css">
+
+    <!-- Viewer production -->
+    <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/three.min.js?v=v3.3.*"></script>
+    <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/viewer3D.min.js?v=v3.3.*"></script>
+
+
+
+    <!-- Developer CSS -->
+    <style>
+        body {
+            margin: 0;
+        }
+
+        #MyViewerDiv {
+            position: relative;
+            /* width: 1000px; */
+            height: 700px;
+            margin: 0;
+            background-color: #F0F8FF;
+            align-content: center;
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+
+</head>
+
+<body class="stylish-color-dark">
+    <header>
+
+    </header>
+
+    <main>
+        <div class="btn blue left btn-sm" id="btnHome">
+            Home
+        </div>
+        <div class="container-fluid">
+            <h1 class="text-center text-white">Katalog náhradních dílů</h1>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <div class="container-fluid">
+                    <h3 class="text-center text-white">Výběr sestavy</h3>
+                    <div class="row">
+                        <!-- Basic dropdown -->
+                        <div class="btn-group">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Vyberte sestavu</button>
+
+                            <div class="dropdown-menu" id="drpMenuAsm">
+                                <a class="dropdown-item" id="asm1">Robotická svařovna</a>
+                                <a class="dropdown-item" id="asm2">Sestava 2</a>
+                                <a class="dropdown-item" id="asm3">Sestava 3</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Separated link</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col flex-center">
+                <div class="container-fluid">
+                    <h3 class="text-center text-white">Prohlížeč</h3>
+                    <center>
+                        <div class="row" id="MyViewerDiv"></div>
+
+
+                    </center>
+                </div>
+            </div>
+
+            <div class="col-2">
+                <div class="container-fluid">
+                    <h3 class="text-left text-white">Ovládací tlačítka</h3>
+                    <div class="row">
+                        <div class="btn blue btn-lg btn-block" id="btnSet">
+                            Označit
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="btn blue btn-lg btn-block" id="btnGet">
+                            Přidat
+                        </div>
+                    </div>
+                    <br>
+                    <!-- <div class="row">
+                        <div class="btn blue btn-lg btn-block" id="btnDelete">
+                            Odebrat
+                        </div>
+                    </div> -->
+                    <br>
+                    <br>
+                    <h3 class="text-left text-white">Položky</h3>
+                    <br>
+                    <div class="row">
+                        <div class="list-group" id="listGrSelect">
+                            <!-- <a href="#" class="list-group-item waves-light">Součást 1</a>
+                            <a href="#" class="list-group-item waves-light">Součást 2</a> -->
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="btn blue btn-lg btn-block" id="btnClearList">
+                            Vyčistit list
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="btn red btn-lg btn-block" id="btnSendRequest">
+                            Odeslat objednávku
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="page-footer bg-blue center-on-small-only pt-0">
+
+        <!--Footer Links-->
+        <div class="container">
+
+            <!--First row-->
+            <div class="row">
+
+                <!--First column-->
+                <div class="col-md-12">
+
+                    <div class="footer-socials mb-5 flex-center">
+
+                        <!--Facebook-->
+                        <a class="icons-sm fb-ic">
+                            <i class="fa fa-facebook fa-lg white-text mr-md-4"> </i>
+                        </a>
+                        <!--Twitter-->
+                        <a class="icons-sm tw-ic">
+                            <i class="fa fa-twitter fa-lg white-text mr-md-4"> </i>
+                        </a>
+                        <!--Google +-->
+                        <a class="icons-sm gplus-ic">
+                            <i class="fa fa-google-plus fa-lg white-text mr-md-4"> </i>
+                        </a>
+                        <!--Linkedin-->
+                        <a class="icons-sm li-ic">
+                            <i class="fa fa-linkedin fa-lg white-text mr-md-4"> </i>
+                        </a>
+                        <!--Instagram-->
+                        <a class="icons-sm ins-ic">
+                            <i class="fa fa-instagram fa-lg white-text mr-md-4"> </i>
+                        </a>
+                        <!--Pinterest-->
+                        <a class="icons-sm pin-ic">
+                            <i class="fa fa-pinterest fa-lg white-text"> </i>
+                        </a>
+                    </div>
+                </div>
+                <!--/First column-->
+            </div>
+            <!--/First row-->
+        </div>
+        <!--/Footer Links-->
+
+        <!--Copyright-->
+        <div class="footer-copyright">
+            <div class="container-fluid">
+                © 2018 Copyright:
+                <a href="https://www.cadstudio.cz"> CADStudio.cz </a>
+            </div>
+        </div>
+        <!--/Copyright-->
+
+
+    </footer>
+    <!-- Footer -->
+
+    <!-- Script -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <!-- <script type="text/javascript" src="js/popper.js"></script> -->
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+
+    <!-- Autodesk Forge Viewing -->
+    <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/three.min.js"></script>
+    <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/viewer3D.min.js"></script>
+    <!-- <script type="text/javascript" src="js/extensions/Autodesk.ADN.Viewing.Extension.js"></script> -->
+    <script type="text/javascript" src="js/oauth.js"></script>
+    <script type="text/javascript" src="js/forge.catalog.nd.js"></script>
+
+    <!-- Script -->
+
+</body>
