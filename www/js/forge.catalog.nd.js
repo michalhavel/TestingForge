@@ -165,6 +165,7 @@ getElById('btnSendRequest').addEventListener('click', function () {
     window.close();
 })
 
+
 //Uspořádání těla emailu, rozdělení pole na jednotlivé řádky
 function formatMailOrder() {
     var pole = eliminateDuplicates(listOfProperties);
@@ -191,20 +192,20 @@ function send() {
 
 //Vytvoření jednotlivých tláčítek (Skladová čísla položek)
 function tlacitka() {
-    getElById('listGrSelect').innerHTML = createListGroup(eliminateDuplicates(listOfProperties), eliminateDuplicates(listOfProperties));
+    getElById('listGrSelect').innerHTML = createListGroup(eliminateDuplicates(listOfProperties));
 };
 
 //Funkce na vytvoření tlačíka do seznam vybraných součástí
-function createListGroup(qty, properties) {
+function createListGroup(properties) {
     var result = '';
     var hrefValue = '';
-    for (var i = 0; i < qty.length; i++) {
+    for (var i = 0; i < properties.length; i++) {
         var value = "";
         value = properties[i];
-        hrefValue = '"/PDF/APF014-034.pdf"';
+        hrefValue = '"/PDF/'+properties[i]+'.pdf"';
         // <a href="#" class="list-group-item waves-light">Součást 1</a>
         //E:\GitHub\TestingForge\www\PDF\APF014-034.pdf
-        result += '<a target="_blank" rel="noopener noreferrer" href=' + hrefValue + ' class="list-group-item waves-light">' + value + '</a>';
+        result += '<a id =' + value + ' target="_blank" rel="noopener noreferrer" href=' + hrefValue + ' class="list-group-item waves-light">' + value + '</a>';
     }
     console.log("Vytvořil jsem pole tlačítek...")
     return result;
