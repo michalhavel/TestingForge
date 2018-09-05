@@ -309,7 +309,7 @@ function getMetadata(urn, onsuccess) {
 function getHierarchy(urn, guid, onsuccess) {
     console.log("getHierarchy for urn=" + urn + " and guid=" + guid);
     $.ajax({
-        url: 'md/hierarchy',
+        url: '/md/hierarchy',
         type: 'GET',
         data: {urn: urn, guid: guid}
     }).done(function (data) {
@@ -655,16 +655,13 @@ function prepareFilesTree() {
 
             // Fill hierarchy tree
             // format, urn, guid, objectIds, rootFileName, fileExtType
-            // showHierarchy(
-            //     MyVars.selectedUrn,
-            //     null,
-            //     null,
-            //     MyVars.rootFileName,
-            //     MyVars.fileExtType
-            // );
-            Autodesk.Viewing.Initializer(options, function onInitialized() {
-                        Autodesk.Viewing.Document.load(MyVars.selectedUrn, onDocumentLoadSuccess, onDocumentLoadFailure);
-                        loadModel()})
+            showHierarchy(
+                MyVars.selectedUrn,
+                null,
+                null,
+                MyVars.rootFileName,
+                MyVars.fileExtType
+            );
             console.log(
                 "data.node.original.storage = " + data.node.original.storage,
                 "data.node.original.wipid = " + data.node.original.wipid,
