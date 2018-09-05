@@ -309,7 +309,7 @@ function getMetadata(urn, onsuccess) {
 function getHierarchy(urn, guid, onsuccess) {
     console.log("getHierarchy for urn=" + urn + " and guid=" + guid);
     $.ajax({
-        url: '/md/hierarchy',
+        url: 'md/hierarchy',
         type: 'GET',
         data: {urn: urn, guid: guid}
     }).done(function (data) {
