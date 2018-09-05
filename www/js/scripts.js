@@ -1078,26 +1078,26 @@ function initializeViewer(urn) {
             function () {
                 MyVars.viewer.start(); // this would be needed if we also want to load extensions
                 loadDocument(MyVars.viewer, options.document);
-                addSelectionListener(MyVars.viewer);
+                // addSelectionListener(MyVars.viewer);
             }
         );
     }
 }
 
-function addSelectionListener(viewer) {
-    viewer.addEventListener(
-        Autodesk.Viewing.SELECTION_CHANGED_EVENT,
-        function (event) {
-            selectInHierarchyTree(event.dbIdArray);
+// function addSelectionListener(viewer) {
+//     viewer.addEventListener(
+//         Autodesk.Viewing.SELECTION_CHANGED_EVENT,
+//         function (event) {
+//             selectInHierarchyTree(event.dbIdArray);
 
-            var dbId = event.dbIdArray[0];
-            if (dbId) {
-                viewer.getProperties(dbId, function (props) {
-                   console.log(props.externalId);
-                });
-            }
-        });
-}
+//             var dbId = event.dbIdArray[0];
+//             if (dbId) {
+//                 viewer.getProperties(dbId, function (props) {
+//                    console.log(props.externalId);
+//                 });
+//             }
+//         });
+// }
 
 // Get the full path of the selected body
 function getFullPath(tree, dbId) {
@@ -1194,7 +1194,7 @@ function loadDocument(viewer, documentId) {
                 //viewer.load(doc.getViewablePath(geometryItems[0]), null, null, null, doc.acmSessionId /*session for DM*/);
                 var options = {};
                 viewer.loadModel(path, options);
-                addFusionButton(viewer);
+                // addFusionButton(viewer);
             }
         },
         // onError

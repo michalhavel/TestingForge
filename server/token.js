@@ -20,22 +20,39 @@
 
 function Token(session) {
     this._session = session;
+
 }
 
-Token.prototype.getOAuth = function () {
-    return this._session.oAuth;
+Token.prototype.getInternalOAuth = function () {
+    return this._session.internalOAuth;
 };
 
-Token.prototype.setOAuth = function (oAuth) {
-    this._session.oAuth = oAuth;
+Token.prototype.setInternalOAuth = function (internalOAuth) {
+    this._session.internalOAuth = internalOAuth;
 };
 
-Token.prototype.getCredentials = function () {
-    return this._session.credentials;
+Token.prototype.getPublicOAuth = function () {
+    return this._session.publicOAuth;
 };
 
-Token.prototype.setCredentials = function (credentials) {
-    this._session.credentials = credentials;
+Token.prototype.setPublicOAuth = function (publicOAuth) {
+    this._session.publicOAuth = publicOAuth;
+};
+
+Token.prototype.getInternalCredentials = function () {
+    return this._session.internalCredentials;
+};
+
+Token.prototype.setInternalCredentials = function (internalCredentials) {
+    this._session.internalCredentials = internalCredentials;
+};
+
+Token.prototype.getPublicCredentials = function () {
+    return this._session.publicCredentials;
+};
+
+Token.prototype.setPublicCredentials = function (publicCredentials) {
+    this._session.publicCredentials = publicCredentials;
 };
 
 module.exports = Token;

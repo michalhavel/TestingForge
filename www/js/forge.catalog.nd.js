@@ -18,14 +18,14 @@ var viewerDiv = getElById('MyViewerDiv');
 viewer = new Autodesk.Viewing.Private.GuiViewer3D(viewerDiv);
 //--------------------------------------------------------------------------------
 //Reakce na výběr z dropdown menu v HTML - výběr modelu pro zobrazení v prohlížeči
-getElById('asm1').addEventListener('click', function () {
-    documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE4LTAyLTI4LTA4LTI1LTE0LWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL0QtNjIwLTAwMC1ObyUyMEV4cHJlc3MuZHdmeA'
+// getElById('asm1').addEventListener('click', function () {
+//     documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE4LTAyLTI4LTA4LTI1LTE0LWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL0QtNjIwLTAwMC1ObyUyMEV4cHJlc3MuZHdmeA'
 
-    Autodesk.Viewing.Initializer(options, function onInitialized() {
-        Autodesk.Viewing.Document.load(documentId, onDocumentLoadSuccess, onDocumentLoadFailure);
-        loadModel();
-    })
-})
+//     Autodesk.Viewing.Initializer(options, function onInitialized() {
+//         Autodesk.Viewing.Document.load(documentId, onDocumentLoadSuccess, onDocumentLoadFailure);
+//         loadModel();
+//     })
+// })
 
 //--------------------------------------------------------------------------
 
@@ -136,7 +136,7 @@ getElById('btnHome').addEventListener('click',function(){
 
 //Funkce pro tlačítko Označit
 getElById('btnSet').addEventListener('click', function () {
-    getProperty(viewer.getSelection(), "Číslo součásti");
+    getProperty(MyVars.viewer.getSelection(), "Číslo součásti");
     //Změna barvy součásti na červenou
     changePartColor(viewer, new THREE.Vector4(255, 0, 0, 1))
 
@@ -217,7 +217,7 @@ function getProperty(selection, name) {
     function callb() {
         for (var i = 0; i < selection.length; i++) {
 
-            viewer.model.getBulkProperties([selection[i]], name, function (prop) {
+           MyVars.viewer.model.getBulkProperties([selection[i]], name, function (prop) {
                 var res = "";
                 var propertyArray = prop[0].properties;
                 for (var i = 0; i < propertyArray.length; i++) {
@@ -244,18 +244,18 @@ function vysledekFunc(vys) {
 //Změna barvy součásti
 function changePartColor(viewer, colorRgb) {
 
-    const selSet = viewer.getSelection();
-    viewer.clearSelection();
+    const selSet = MyVars.viewer.getSelection();
+    MyVars.viewer.clearSelection();
     const color = colorRgb;
     for (let i = 0; i < selSet.length; i++) {
-        viewer.setThemingColor(selSet[i], color);
+        MyVars.viewer.setThemingColor(selSet[i], color);
     }
 }
 
 //----------------------------------------------------------------------
 //Funkce na změnu pozadí na jinou barvu
 function changeBackground() {
-    viewer.setBackgroundColor(51, 51, 204, 255, 255, 255);
+    MyVars.viewer.setBackgroundColor(51, 51, 204, 255, 255, 255);
 }
 //----------------------------------------------------------------------
 

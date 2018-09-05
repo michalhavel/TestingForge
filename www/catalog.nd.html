@@ -11,11 +11,14 @@
 
     <!-- Common packages: JQuery & Bootstrap -->
     <link rel="shortcut icon" href="images/faviconCS.ico" type="image/x-icon" />
-
+    <link rel="stylesheet" href="css/jstree.style.min.css" />
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <!-- <link rel="stylesheet" href="css/bootstrap-theme.min.css"> -->
     <link rel="stylesheet" href="css/main.css">
     <!-- <link rel="stylesheet" href="css/font-awesome.css"> -->
+    <!-- <script src="js/jquery.storageapi.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/jstree.js"></script> -->
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -27,10 +30,16 @@
     <link href="css/style.css" rel="stylesheet">
 
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/moment.min.js"></script>
+
+    <link rel="stylesheet" href="css/jstree.style.min.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script language="JavaScript" src="js/jquery.min.js"></script>
+    <script language="JavaScript" src="js/jquery.storageapi.min.js"></script>
+    <!-- <script type="text/javascript" src="js/forge.catalog.nd.js"></script> -->
+    <script language="JavaScript" src="js/scripts.js"></script>
+    <!-- <script language="JavaScript" src="js/scripts.js"></script> -->
+    <script src="js/jstree.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/popper.js"></script>
     <!-- <script src="js/popper.min.js"></script> -->
 
 
@@ -46,18 +55,20 @@
     <script type="text/javascript" src="js/oauth.js"></script>
 
 
+
+
     <!-- Developer CSS -->
     <style>
         body {
             margin: 0;
         }
 
-        #MyViewerDiv {
+        #forgeViewer {
             position: relative;
             /* width: 1000px; */
             height: 700px;
             margin: 0;
-            background-color: #F0F8FF;
+            /* background-color: #F0F8FF; */
             align-content: center;
             text-align: center;
             vertical-align: middle;
@@ -72,106 +83,128 @@
     </header>
 
     <main>
-        <div class="btn blue left btn-sm" id="btnHome">
-            Home
+        <div class="row">
+            <div class="btn blue left btn-sm" id="btnHome">
+                Home
+            </div>
+            <!-- <div class="btn yellow btn-sm"> -->
+
+            <a href="#" id="authenticate" class="btn btn-warning">
+                <span class="glyphicon glyphicon-user"></span>
+                Log In
+            </a>
+
+            <div class="col-sm-3" style="height:40px">
+                <div id="progressInfo" class="btn btn-info" style="font-size: 10pt ">
+                    <span id="progressInfoText">Progress info</span>
+                    <span id="progressInfoIcon"></span>
+                </div>
+            </div>
+            <!-- </div> -->
         </div>
+
+        <!-- <div class="col-sm-3" style="height:40px">
+
+            <a href="#" id="authenticate" class="btn btn-warning btn-block">
+                <span class="glyphicon glyphicon-user"></span>
+                Log In
+            </a>
+        </div> -->
+
         <div class="container-fluid">
             <h1 class="text-center text-white">Katalog náhradních dílů</h1>
         </div>
         <div class="row">
             <div class="col left">
                 <div class="container-fluid">
-                    <h3 class="text-center text-white">Výběr sestavy</h3>
-                    <!-- <div class="row"> -->
-                    <!-- Basic dropdown -->
-                    <!-- <div class="btn-group">
-                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Vyberte sestavu</button>
+                    <h3 class="text-left text-white">Výběr sestavy</h3>
 
-                            <div class="dropdown-menu" id="drpMenuAsm">
-                                <a class="dropdown-item" id="asm1">Robotická svařovna</a>
-                                <a class="dropdown-item" id="asm2">Sestava 2</a>
-                                <a class="dropdown-item" id="asm3">Sestava 3</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
-                            </div>
-                        </div> -->
                     <div class="col left">
-                        <!-- <div class="container-fluid"> -->
-                            <div class="btn blue btn-sm" id="asm1">
-                                Robotická svařovna
+
+                        <div class="row">
+                            <div class="col-sm-3 forgeTreeContainer white-text">
+                                <div id="forgeFiles">
+
+                                </div>
+                                <div id="forgeUpload" class="forgeControlContainer">
+ 
+                                </div>
                             </div>
-                            <div class="btn blue btn-sm" id="asm2">
-                                Sestava 2
-                            </div>
-                            <div class="btn blue btn-sm" id="asm3">
-                                Sestava 3
-                            </div>
-                        <!-- </div> -->
+                                <div id="forgeFileOptions" class="forgeControlContainer" style="height:50px; overflow: hidden;">
+                            <div id="forgeFormats"></div>
+
+                        </div>
 
                     </div>
-
-                    <!-- </div> -->
                 </div>
             </div>
-            <div class="col-8 flex-center">
-                <div class="container">
-                    <h3 class="text-center text-white">Prohlížeč</h3>
-                    <center>
-                        <div class="row" id="MyViewerDiv"></div>
-
-
-                    </center>
-                </div>
-            </div>
-
-            <div class="col right">
-                <div class="container-fluid">
-                    <h3 class="text-left text-white">Ovládací tlačítka</h3>
-                    <div class="row">
-                        <div class="btn blue btn-lg btn-block" id="btnSet">
-                            Označit
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="btn blue btn-lg btn-block" id="btnGet">
-                            Přidat
-                        </div>
-                    </div>
-                    <br>
-                    <!-- <div class="row">
-                        <div class="btn blue btn-lg btn-block" id="btnDelete">
-                            Odebrat
-                        </div>
-                    </div> -->
-                    <br>
-                    <br>
-                    <h3 class="text-left text-white">Položky</h3>
-                    <br>
-                    <div class="row">
-                        <div class="list-group" id="listGrSelect">
-                            <!-- <a href="#" class="list-group-item waves-light">Součást 1</a>
-                            <a href="#" class="list-group-item waves-light">Součást 2</a> -->
-                        </div>
-                    </div>
-                    <br>
-                    <br>
-                    <div class="row">
-                        <div class="btn blue btn-lg btn-block" id="btnClearList">
-                            Vyčistit list
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="btn red btn-lg btn-block" id="btnSendRequest">
-                            Odeslat objednávku
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
         </div>
+        
+        </div>
+        <div class="row">
+                <div class="col left flex-column">
+                    <div class="container">
+                        <h3 class="text-center text-white">Prohlížeč</h3>
+                        <center>
+                            <div class="row" id="forgeViewer"></div>
+    
+    
+                        </center>
+                    </div>
+                </div>
+    
+                <div class="col right col-2">
+                    <div class="container">
+                        <h3 class="text-left text-white">Ovládací tlačítka</h3>
+                        <div class="row">
+                            <div class="btn blue btn-lg btn-block" id="btnSet">
+                                Označit
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="btn blue btn-lg btn-block" id="btnGet">
+                                Přidat
+                            </div>
+                        </div>
+                        <br>
+                        <!-- <div class="row">
+                                        <div class="btn blue btn-lg btn-block" id="btnDelete">
+                                            Odebrat
+                                        </div>
+                                    </div> -->
+                        <br>
+                        <br>
+                        <h3 class="text-left text-white">Položky</h3>
+                        <br>
+                        <div class="row">
+                            <div class="list-group" id="listGrSelect">
+                                <!-- <a href="#" class="list-group-item waves-light">Součást 1</a>
+                                            <a href="#" class="list-group-item waves-light">Součást 2</a> -->
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="row">
+                            <div class="btn blue btn-lg btn-block" id="btnClearList">
+                                Vyčistit list
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="btn red btn-lg btn-block" id="btnSendRequest">
+                                Odeslat objednávku
+                            </div>
+                        </div>
+    
+    
+                    </div>
+                </div>
+            </div>
+        <br>
+        <br>
+        <br>
+
     </main>
     <!-- Footer -->
     <footer class="page-footer bg-blue center-on-small-only pt-0">
@@ -245,8 +278,8 @@
 
     <!-- Autodesk Forge Viewing -->
     <!-- <script type="text/javascript" src="js/extensions/Autodesk.ADN.Viewing.Extension.js"></script> -->
-    <script type="text/javascript" src="js/forge.catalog.nd.js"></script>
+
 
     <!-- Script -->
-
+    <script type="text/javascript" src="js/forge.catalog.nd.js"></script>
 </body>
