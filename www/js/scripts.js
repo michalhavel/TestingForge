@@ -662,6 +662,7 @@ function prepareFilesTree() {
             //     MyVars.rootFileName,
             //     MyVars.fileExtType
             // );
+            loadModel();
             console.log(
                 "data.node.original.storage = " + data.node.original.storage,
                 "data.node.original.wipid = " + data.node.original.wipid,
