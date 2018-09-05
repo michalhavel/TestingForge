@@ -153,7 +153,7 @@ getElById('btnClearList').addEventListener('click', function () {
     listOfProperties = [];
 
     //Reset barev součástí na výchozí
-    viewer.clearThemingColors()
+    MyVars.viewer.clearThemingColors()
 
     //Vyčištění listu tlačítek jednotlivých součástí
     getElById('listGrSelect').innerHTML = createListGroup([], [])
@@ -162,7 +162,7 @@ getElById('btnClearList').addEventListener('click', function () {
 //Funkce pro tlačítko Odeslat objednávku
 getElById('btnSendRequest').addEventListener('click', function () {
     send();
-    window.close();
+    // window.close();
 })
 
 
@@ -179,7 +179,7 @@ function formatMailOrder() {
         index += +1;
         out += index +". " + element + "%0A"
     });
-    return "Tímto u Vás Objednávám náhradní součásti pro stroj/zařízení " + viewables[0].name + ":" + "%0A" + out
+    return "Tímto u Vás Objednávám náhradní součásti pro stroj/zařízení " + MyVars.fileName + ":" + "%0A" + out
 }
 
 //Funkce vygenerování emailu s objednávkou
@@ -292,21 +292,21 @@ function loadTransform() {
 // provided to you.
 
 function loadControlSelector() {
-    viewer.loadExtension('_Viewing.Extension.ControlSelector');
+    MyVars.viewer.loadExtension('_Viewing.Extension.ControlSelector');
 }
 
 function EventsTutorial() {
-    viewer.loadExtension('Autodesk.ADN.Viewing.Extension.EventWatcher.js');
+    MyVars.viewer.loadExtension('Autodesk.ADN.Viewing.Extension.EventWatcher.js');
 } function loadControlSelector() {
-    viewer.loadExtension('_Viewing.Extension.ControlSelector');
+    MyVars.viewer.loadExtension('_Viewing.Extension.ControlSelector');
 }
 
 function EventsTutorial() {
-    viewer.loadExtension('Autodesk.ADN.Viewing.Extension.EventWatcher.js');
+    MyVars.viewer.loadExtension('Autodesk.ADN.Viewing.Extension.EventWatcher.js');
 }
 
 function AutodeskViewingExtension() {
-    viewer.loadExtension('Autodesk.ADN.Viewing.Extension.js');
+    MyVars.viewer.loadExtension('Autodesk.ADN.Viewing.Extension.js');
 };
 
 // $.getScript('js/extensions/Autodesk.ADN.Viewing.Extension.js',function(){
