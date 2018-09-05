@@ -58,8 +58,8 @@ app.set('port', process.env.PORT || 3030); // main port
 
 // prepare our API endpoint routing
 var oauth = require('./oauth');
-var dm = require('./data.management');
-var md = require('./model.derivative');
+var dm = require('./data.management/');
+var md = require('./model.derivative/');
 app.use('/', oauth); // redirect oauth API calls
 app.use('/dm', dm); // redirect our Data Management API calls
 app.use('/md', md); // redirect our Data Management API calls
