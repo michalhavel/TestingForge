@@ -655,13 +655,13 @@ function prepareFilesTree() {
 
             // Fill hierarchy tree
             // format, urn, guid, objectIds, rootFileName, fileExtType
-            showHierarchy(
-                MyVars.selectedUrn,
-                null,
-                null,
-                MyVars.rootFileName,
-                MyVars.fileExtType
-            );
+            // showHierarchy(
+            //     MyVars.selectedUrn,
+            //     null,
+            //     null,
+            //     MyVars.rootFileName,
+            //     MyVars.fileExtType
+            // );
             console.log(
                 "data.node.original.storage = " + data.node.original.storage,
                 "data.node.original.wipid = " + data.node.original.wipid,
