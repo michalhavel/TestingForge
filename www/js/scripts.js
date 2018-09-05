@@ -662,7 +662,9 @@ function prepareFilesTree() {
             //     MyVars.rootFileName,
             //     MyVars.fileExtType
             // );
-            loadModel();
+            Autodesk.Viewing.Initializer(options, function onInitialized() {
+                        Autodesk.Viewing.Document.load(MyVars.selectedUrn, onDocumentLoadSuccess, onDocumentLoadFailure);
+                        loadModel()})
             console.log(
                 "data.node.original.storage = " + data.node.original.storage,
                 "data.node.original.wipid = " + data.node.original.wipid,
