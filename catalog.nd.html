@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <!-- <meta http-equiv="x-ua-Compatible" content="ie=edge"> -->
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=no" />
+
+    <title>Forge Katalog Náhradních Dílů</title>
+
+    <!-- Common packages: JQuery & Bootstrap -->
+    <link rel="shortcut icon" href="images/faviconCS.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/jstree.style.min.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="css/bootstrap-theme.min.css"> -->
+    <link rel="stylesheet" href="css/main.css">
+    <!-- <link rel="stylesheet" href="css/font-awesome.css"> -->
+    <!-- <script src="js/jquery.storageapi.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/jstree.js"></script> -->
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.css" rel="stylesheet">
+
+
+
+    <link rel="stylesheet" href="css/jstree.style.min.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script language="JavaScript" src="js/jquery.min.js"></script>
+    <script language="JavaScript" src="js/jquery.storageapi.min.js"></script>
+    <!-- <script type="text/javascript" src="js/forge.catalog.nd.js"></script> -->
+    <script language="JavaScript" src="js/scripts.js"></script>
+    <!-- <script language="JavaScript" src="js/scripts.js"></script> -->
+    <script src="js/jstree.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- <script src="js/popper.min.js"></script> -->
+
+
+
+
+    <!-- The Viewer CSS -->
+    <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/style.min.css?v=3.3.*" type="text/css">
+
+    <!-- Viewer production -->
+    <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/three.min.js?v=3.3.*"></script>
+    <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/viewer3D.min.js?v=3.3.*"></script>
+
+    <script type="text/javascript" src="js/oauth.js"></script>
+
+
+
+
+    <!-- Developer CSS -->
+    <style>
+        body {
+            margin: 0;
+        }
+
+        #forgeViewer {
+            position: relative;
+            /* width: 1000px; */
+            height: 700px;
+            margin: 0;
+            /* background-color: #F0F8FF; */
+            align-content: center;
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+
+</head>
+
+<body class="stylish-color-dark">
+    <header>
+
+    </header>
+
+    <main>
+        <div class="container-fluid">
+            <h1 class="text-center text-white">Katalog náhradních dílů</h1>
+        </div>
+        <div class="row">
+            <!-- <div class="col-1 left"></div> -->
+            <div class="col-1"></div>
+            <div class="btn blue left btn-sm" id="btnHome">
+                Home
+            </div>
+            <!-- <div class="btn yellow btn-sm"> -->
+
+            <a href="#" id="authenticate" class="btn btn-warning btn-sm">
+                <span class="glyphicon glyphicon-user"></span>
+                Log In
+            </a>
+
+            <!-- <div class="col-sm-3" style="height:40px"> -->
+                <div id="progressInfo" class="btn btn-info btn-sm">
+                    <span id="progressInfoText">Progress info</span>
+                    <span id="progressInfoIcon"></span>
+                </div>
+            <!-- </div> -->
+            <!-- </div> -->
+        </div>
+
+        <!-- <div class="col-sm-3" style="height:40px">
+
+            <a href="#" id="authenticate" class="btn btn-warning btn-block">
+                <span class="glyphicon glyphicon-user"></span>
+                Log In
+            </a>
+        </div> -->
+
+
+        <div class="row">
+            <div class="col left">
+                <div class="container-fluid">
+                    <h3 class="text-left text-white">Výběr sestavy</h3>
+
+                    <div class="col left">
+
+                        <div class="row">
+                            <div class="col-sm-3 forgeTreeContainer white-text">
+                                <div id="forgeFiles">
+
+                                </div>
+                                <div id="forgeUpload" class="forgeControlContainer">
+
+                                </div>
+                            </div>
+                            <div id="forgeFileOptions" class="forgeControlContainer" style="height:50px; overflow: hidden;">
+                                <div id="forgeFormats"></div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col left flex-column">
+                <div class="container">
+                    <h3 class="text-center text-white">Prohlížeč</h3>
+                    <center>
+                        <div class="row" id="forgeViewer"></div>
+
+
+                    </center>
+                </div>
+            </div>
+
+            <div class="col right col-2">
+                <div class="container">
+                    <h3 class="text-left text-white">Ovládací tlačítka</h3>
+                    <div class="row">
+                        <div class="btn blue btn-lg btn-block" id="btnSet">
+                            Označit
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="btn blue btn-lg btn-block" id="btnGet">
+                            Přidat
+                        </div>
+                    </div>
+                    <br>
+                    <!-- <div class="row">
+                                        <div class="btn blue btn-lg btn-block" id="btnDelete">
+                                            Odebrat
+                                        </div>
+                                    </div> -->
+                    <br>
+                    <br>
+                    <h3 class="text-left text-white">Položky</h3>
+                    <br>
+                    <div class="row">
+                        <div class="list-group" id="listGrSelect">
+                            <!-- <a href="#" class="list-group-item waves-light">Součást 1</a>
+                                            <a href="#" class="list-group-item waves-light">Součást 2</a> -->
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="btn blue btn-lg btn-block" id="btnClearList">
+                            Vyčistit list
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="btn red btn-lg btn-block" id="btnSendRequest">
+                            Odeslat objednávku
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-1"></div>
+        </div>
+        <br>
+        <br>
+        <br>
+
+    </main>
+    <!-- Footer -->
+    <footer class="page-footer bg-blue center-on-small-only pt-0">
+
+        <!--Footer Links-->
+        <div class="container">
+
+            <!--First row-->
+            <div class="row">
+
+                <!--First column-->
+                <div class="col-md-12">
+
+                    <div class="footer-socials mb-5 flex-center">
+
+                        <!--Facebook-->
+                        <a class="icons-sm fb-ic">
+                            <i class="fa fa-facebook fa-lg white-text mr-md-4"> </i>
+                        </a>
+                        <!--Twitter-->
+                        <a class="icons-sm tw-ic">
+                            <i class="fa fa-twitter fa-lg white-text mr-md-4"> </i>
+                        </a>
+                        <!--Google +-->
+                        <a class="icons-sm gplus-ic">
+                            <i class="fa fa-google-plus fa-lg white-text mr-md-4"> </i>
+                        </a>
+                        <!--Linkedin-->
+                        <a class="icons-sm li-ic">
+                            <i class="fa fa-linkedin fa-lg white-text mr-md-4"> </i>
+                        </a>
+                        <!--Instagram-->
+                        <a class="icons-sm ins-ic">
+                            <i class="fa fa-instagram fa-lg white-text mr-md-4"> </i>
+                        </a>
+                        <!--Pinterest-->
+                        <a class="icons-sm pin-ic">
+                            <i class="fa fa-pinterest fa-lg white-text"> </i>
+                        </a>
+                    </div>
+                </div>
+                <!--/First column-->
+            </div>
+            <!--/First row-->
+        </div>
+        <!--/Footer Links-->
+
+        <!--Copyright-->
+        <div class="footer-copyright">
+            <div class="container-fluid">
+                © 2018 Copyright:
+                <a href="https://www.cadstudio.cz"> CADStudio.cz </a>
+            </div>
+        </div>
+        <!--/Copyright-->
+
+
+    </footer>
+    <!-- Footer -->
+
+    <!-- Script -->
+    <!-- JQuery -->
+    <!-- <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script> -->
+    <!-- Bootstrap tooltips -->
+    <!-- <script type="text/javascript" src="js/popper.js"></script> -->
+    <!-- <script type="text/javascript" src="js/popper.min.js"></script> -->
+    <!-- Bootstrap core JavaScript -->
+    <!-- <script type="text/javascript" src="js/bootstrap.min.js"></script> -->
+    <!-- MDB core JavaScript -->
+    <!-- <script type="text/javascript" src="js/mdb.min.js"></script> -->
+
+    <!-- Autodesk Forge Viewing -->
+    <!-- <script type="text/javascript" src="js/extensions/Autodesk.ADN.Viewing.Extension.js"></script> -->
+
+
+    <!-- Script -->
+    <script type="text/javascript" src="js/forge.catalog.nd.js"></script>
+</body>
