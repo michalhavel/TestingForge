@@ -49,7 +49,7 @@ app.use(cookieSession({
 */
 
 // prepare server routing
-app.use('/', express.static(__dirname + '/../')); // redirect static calls
+app.use('/', express.static(__dirname)); // redirect static calls
 app.use('/js', express.static(__dirname + '/../node_modules/bootstrap/dist/js')); // redirect static calls
 app.use('/js', express.static(__dirname + '/../node_modules/jquery/dist')); // redirect static calls
 app.use('/css', express.static(__dirname + '/../node_modules/bootstrap/dist/css')); // redirect static calls
