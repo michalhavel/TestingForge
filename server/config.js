@@ -24,13 +24,13 @@ module.exports = {
 
   // this this callback URL when creating your client ID and secret
   // callbackURL: process.env.FORGE_CALLBACK_URL || 'https://cadsforge.herokuapp.com/api/forge/callback/oauth',
-  callbackURL: process.env.FORGE_CALLBACK_URL || 'https://cadsforge.azurewebsites.net/api/forge/callback/oauth',
+  callbackURL: process.env.FORGE_CALLBACK_URL || 'https://cadsforge.azurewebsites.net',
   // callbackURL: process.env.FORGE_CALLBACK_URL || 'http://localhost:3030/api/forge/callback/oauth',
 
   // set environment variables or hard-code here
   credentials: {
-    client_id: process.env.FORGE_CLIENT_ID || '98GBhvoBz0MS9rheRd1qMyfMGjBCfmP6',
-    client_secret: process.env.FORGE_CLIENT_SECRET || 'H7YzIvIA0QD6Sin4'
+    client_id: process.env.FORGE_CLIENT_ID || 'ET3t9fEvOyCOJkcjbS2U1Y6PGzQOtwf1',
+    client_secret: process.env.FORGE_CLIENT_SECRET || 'GItbIUFkjI6nlVVf'
   },
 
   // Required scopes for your application on server-side
