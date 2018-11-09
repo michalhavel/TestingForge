@@ -5,7 +5,7 @@ var indexViewable;
 var documentId;
 var options = {
     env: 'AutodeskProduction',
-    getAccessToken: get3ForgeToken
+    getAccessToken: getForgeToken
 }
 
 //Funkce pro získání elementu z HTML dle názvu
