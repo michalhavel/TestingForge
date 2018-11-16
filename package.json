@@ -21,8 +21,7 @@
     "zlib": "1.2.11"
   },
   "scripts": {
-    "start": "NODE_ENV=production node start.js",
-    "dev": "node start.js",
+    "start": "node <./start.js>",
     "nodemon": "nodemon start.js --ignore www/"
   },
   "repository": {
