@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Getting Started with Viewer and NodeJS",
   "main": "server.js",
+  "engines": {
+    "node":"8.11.2",
+    "npm":"5.6.0"
+  },
   "scripts": {
     "start": "NODE_ENV=production node start.js",
     "dev": "node start.js",
@@ -24,7 +28,7 @@
     "express-session": "^1.15.6",
     "findup-sync": "^0.1.2",
     "font-awesome": "^4.7.0",
-    "forge-apis": "^0.2.7",
+    "forge-apis": "^0.4.4",
     "forge-data-management": "^2.1.1",
     "forge-model-derivative": "^2.1.1",
     "forge-oauth2": "^1.1.2",
