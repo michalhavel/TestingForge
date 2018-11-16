@@ -205,7 +205,7 @@ function createListGroup(properties) {
         hrefValue = '"/PDF/'+properties[i]+'.pdf"';
         // <a href="#" class="list-group-item waves-light">Součást 1</a>
         //E:\GitHub\TestingForge\www\PDF\APF014-034.pdf
-        result += '<a id =' + value + ' target="_blank" rel="noopener noreferrer" href=' + hrefValue + ' class="list-group-item waves-light">' + value + '</a>';
+        result += '<a id =' + value + ' target="_blank" rel="no-opener no-referrer" href=' + hrefValue + ' class="list-group-item waves-light">' + value + '</a>';
     }
     console.log("Vytvořil jsem pole tlačítek...")
     return result;
