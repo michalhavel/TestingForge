@@ -21,8 +21,7 @@
     "zlib": "1.2.11"
   },
   "scripts": {
-    "start": "node <./start.js>",
-    "nodemon": "nodemon start.js --ignore www/"
+    "start": "node <./start.js>"
   },
   "repository": {
     "type": "git",
